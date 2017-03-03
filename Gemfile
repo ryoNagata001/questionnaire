@@ -55,3 +55,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'slim-rails'
 # Bootstrap
 gem 'bootstrap-sass'
+# Device
+gem 'devise'
