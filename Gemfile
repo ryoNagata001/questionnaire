@@ -54,8 +54,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # slim
 gem 'slim-rails'
 # Bootstrap
-gem 'less-rails'
-gem 'therubyracer'
-gem 'twitter-bootstrap-rails', '~> 2.2.8'
-gem 'font-awesome-rails'
-gem 'bootstrap-sass', '2.3.2.0'
+gem 'bootstrap-sass'
