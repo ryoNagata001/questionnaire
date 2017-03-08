@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
-  resources :companies
+  resources :companies do
+    devise_for :users
+  end
   devise_for :admins
   root 'home#top'
   get '/about'=> 'home#about'
