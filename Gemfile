@@ -57,3 +57,5 @@ gem 'slim-rails'
 gem 'bootstrap-sass'
 # Devise
 gem 'devise'
+# CarrierWave
+gem 'carrierwave'
