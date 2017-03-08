@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :companies
   devise_for :admins
   root 'home#top'
   get '/about'=> 'home#about'
