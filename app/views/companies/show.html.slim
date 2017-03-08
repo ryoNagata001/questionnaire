@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @company.name
+p
+  strong Password:
+  = @company.password
+p
+  strong Admin:
+  = @company.admin
+p
+  strong Chief:
+  = @company.chief_id
+
+= link_to 'Edit', edit_company_path(@company)
+'|
+= link_to 'Back', companies_path
