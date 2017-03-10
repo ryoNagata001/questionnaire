@@ -29,10 +29,11 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
-        format.html { redirect_to @company, notice: 'Company was successfully created.' }
+        format.html { redirect_to company_new_chief_path(@company.id), notice: 'Company was successfully created.' }
       else
         format.html { render :new }
     end
+  end
   end
 
   # PATCH/PUT /companies/1

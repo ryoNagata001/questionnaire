@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   resources :companies do
     devise_for :users, skip: [:confirmations, :sessions], controllers: {
-      registrations: 'users/registrations',
+      registrations: 'users/registrations'
       }
+      devise_scope :user do
+        get 'new_chief' => 'users/registrations#new_chief'
+        post 'create_chief' => 'users/registrations#create_chief'
+      end
   end
   devise_for :users, skip: [:registrations, :passwords], controllers: {
    confirmations: 'users/confirmations'

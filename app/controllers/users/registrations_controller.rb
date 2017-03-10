@@ -1,18 +1,28 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-before_action :configure_sign_up_params, only: [:create]
-before_action :set_company, only: [:create, :new]
+before_action :configure_sign_up_params, only: [:create, :create_chief]
+before_action :set_company, only: [:create, :new, :create_chief, :new_chief]
 # before_action :configure_account_update_params, only: [:update]
 def create
+  create_user
+end
+def create_chief
   @user = @company.users.create(user_params)
   respond_to do |format|
     if @user.save
-      format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
+      @company.chief_id = @user.id
+      if @company.save
+        format.html { redirect_to company_path(@company), notice: 'chief user was successfully created' }
+      else
+        format.html { render :new }
+      end
     else
       format.html { render :new }
     end
   end
 end
-
+def new_chief
+  @user = User.new
+end
 
   # GET /resource/sign_up
   # def new
@@ -79,5 +89,17 @@ private
     def user_params
       params.require(:user).permit(:name, :password, :avatar, :email)
     end
+    def create_user
+  @user = @company.users.create(user_params)
+  respond_to do |format|
+    if @user.save
+      format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
+    else
+      format.html { render :new }
+    end
+  end
+end
+
+
 
 end
