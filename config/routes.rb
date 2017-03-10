@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :companies do
+    devise_for :users, controllers: {
+      registrations: 'users/registrations',
+      confirmations: 'users/confirmations'
+      }
+  end
   devise_for :admins
   root 'home#top'
   get '/about'=> 'home#about'
