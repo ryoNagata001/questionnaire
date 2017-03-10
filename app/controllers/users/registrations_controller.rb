@@ -7,19 +7,17 @@ def create
   respond_to do |format|
     if @user.save
       format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
-      format.json { render :show, status: :created, location: @user }
     else
       format.html { render :new }
-      format.json { render json: @user.errors, status: :unprocessable_entity }
     end
   end
 end
 
 
   # GET /resource/sign_up
-  def new
-    super
-  end
+  # def new
+  #  super
+  # end
 
   # POST /resource
   # def create
