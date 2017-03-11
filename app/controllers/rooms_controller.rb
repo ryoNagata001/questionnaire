@@ -8,8 +8,8 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @user = User.find(@room.user.id)
     @chief = User.find(@room.chief_id)
-    @contents = @room.chat_contents
-    @content = ChatContent.new
+    @contents = @room.chats
+    @content = Chat.new
   end
   
 end

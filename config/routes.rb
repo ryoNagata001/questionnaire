@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         collection do
           get 'index'
         end
+        resources :chats, only: :create 
       end
   end
   devise_for :users, skip: [:registrations, :passwords], controllers: {

@@ -5,14 +5,14 @@
 - if @contents.empty?
   h2 チャットを始める
 - else
-  - @conetents.each do |content|
+  - @contents.each do |content|
     - if content.transmittion_user_id == @company.chief_id
-      p = @chief.name
+      h2 = @chief.name
     - else
-      p = @user.name
+      = @user.name
     p = content.content
 
-= form_for @content do |f|
+= form_for([@room, @room.chats.build], url: company_room_chats_path(:company_id => @company.id, :room_id => @room.id)) do |f|
   .field
   = f.label :Message
   = f.text_field :content
