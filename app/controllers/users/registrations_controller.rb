@@ -1,6 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 before_action :configure_sign_up_params, only: [:create, :create_chief]
-before_action :set_company, only: [:create, :new, :create_chief, :new_chief]
+before_action :set_company, only: [:create, :new, :create_chief, :new_chief, :update]
 # before_action :configure_account_update_params, only: [:update]
 def create
   @user = @company.users.create(user_params)
@@ -49,14 +49,18 @@ end
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+   def edit
+     @user = current_user
+   end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if @company.users.update(user_params)
+      format.html { redirect_to company_user_path(:company_id => @company.id, :id => current_user.id), notice: 'your account was successfully updated.' }
+    else
+      format.html { render :edit}
+    end
+  end
 
   # DELETE /resource
   # def destroy
