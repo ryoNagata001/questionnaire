@@ -1,0 +1,20 @@
+- if current_user.id == @company.chief_id
+  h1 = @user.name
+- else
+  h1 = @chief.name
+- if @contents.empty?
+  h2 チャットを始める
+- else
+  - @conetents.each do |content|
+    - if content.transmittion_user_id == @company.chief_id
+      p = @chief.name
+    - else
+      p = @user.name
+    p = content.content
+
+= form_for @content do |f|
+  .field
+  = f.label :Message
+  = f.text_field :content
+  .actions
+  = f.submit

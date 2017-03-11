@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  transmittion_user_id: 1
+  room: one
+
+two:
+  content: MyText
+  transmittion_user_id: 1
+  room: two

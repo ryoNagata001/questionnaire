@@ -4,13 +4,20 @@ before_action :set_company, only: [:create, :new, :create_chief, :new_chief]
 # before_action :configure_account_update_params, only: [:update]
 def create
   @user = @company.users.create(user_params)
+  @room = Room.new
+  @room.user_id = @user.id
+  @room.chief_id = @company.chief_id
   respond_to do |format|
     if @user.save
-      format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
+      if @room.save
+        format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
+      else
+        format.html { render :new }
+      end
     else
       format.html { render :new }
     end
- 
+  end
 end
 def create_chief
   @user = @company.users.create(user_params)
