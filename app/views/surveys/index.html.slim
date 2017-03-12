@@ -1,0 +1,23 @@
+h1 Listing surveys
+
+table
+  thead
+    tr
+      th Title
+      th Company
+      th
+      th
+      th
+
+  tbody
+    - @surveys.each do |survey|
+      tr
+        td = survey.title
+        td = survey.company
+        td = link_to 'Show', company_survey_path(:company_id => @company.id, :id => survey.id)
+        td = link_to 'Edit', edit_company_survey_path(:company_id => @company.id, :id => survey.id)
+        td = link_to 'Destroy', company_survey_path(:company_id => @company.id, :id => survey.id), data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Survey', new_company_survey_path(@company.id)

@@ -1,0 +1,17 @@
+h1 Editing survey
+
+= form_for(@survey, url: company_survey_path(:company_id => @survey.company_id, :id => @survey.id, :method => :put)) do |f|
+  - if @survey.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@survey.errors.count, "error")} prohibited this survey from being saved:"
+      ul
+        - @survey.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .actions = f.submit
+= link_to 'Show', company_survey_path(:company_id => @survey.company_id, :id => @survey.id)
+'|
+= link_to 'Back', company_surveys_path(@survey.company_id)
