@@ -272,5 +272,5 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   # mail setting
-  config.mailer_sender = "メールアドレス"
+  config.mailer_sender = Settings.gmail[:user_name]
 end

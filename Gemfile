@@ -59,3 +59,5 @@ gem 'bootstrap-sass'
 gem 'devise'
 # CarrierWave
 gem 'carrierwave'
+# config
+gem 'config'
