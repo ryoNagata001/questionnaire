@@ -10,10 +10,10 @@ Rails.application.routes.draw do
     end
     resources :rooms, only: [] do
       member do
-        get 'show'
+        get :show
       end
       collection do
-        get 'index'
+        get :index
       end
       resources :chats, only: :create
     end

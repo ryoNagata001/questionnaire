@@ -1,8 +1,10 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 before_action :configure_sign_up_params, only: [:create, :create_chief]
 before_action :set_company, only: [:create, :new, :create_chief, :new_chief, :update]
+
 # before_action :configure_account_update_params, only: [:update]
 def create
+  set_company
   @user = @company.users.create(user_params)
   @room = Room.new
   @room.user_id = @user.id
@@ -19,7 +21,9 @@ def create
     end
   end
 end
+
 def create_chief
+  set_company
   @user = @company.users.create(user_params)
   respond_to do |format|
     if @user.save
@@ -34,19 +38,17 @@ def create_chief
     end
   end
 end
+
 def new_chief
+  set_company
   @user = User.new
 end
 
   # GET /resource/sign_up
-  # def new
-  #  super
-  # end
-
-  # POST /resource
-  # def create
-  #   super
-  # end
+  def new
+    set_company
+    super
+  end
 
   # GET /resource/edit
    def edit
@@ -55,6 +57,7 @@ end
 
   # PUT /resource
   def update
+    set_company
     if @company.users.update(user_params)
       format.html { redirect_to company_user_path(:company_id => @company.id, :id => current_user.id), notice: 'your account was successfully updated.' }
     else
@@ -97,27 +100,26 @@ end
    def after_inactive_sign_up_path_for(resource)
      super(resource)
    end
+
 private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_company
-      @company = Company.find(params[:company_id])
-    end
+      # Use callbacks to share common setup or constraints between actions.
+      def set_company
+        @company = Company.find(params[:company_id])
+      end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:name, :password, :avatar, :email)
-    end
-    def create_user
-  @user = @company.users.create(user_params)
-  respond_to do |format|
-    if @user.save
-      format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
-    else
-      format.html { render :new }
-    end
-  end
-end
+      # Never trust parameters from the scary internet, only allow the white list through.
+      def user_params
+        params.require(:user).permit(:name, :password, :avatar, :email)
+      end
 
-
-
+      def create_user
+        @user = @company.users.create(user_params)
+        respond_to do |format|
+          if @user.save
+            format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
+          else
+            format.html { render :new }
+          end
+        end
+      end
 end

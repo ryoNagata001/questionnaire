@@ -1,8 +1,10 @@
 class RoomsController < ApplicationController
+
   def index
     @company = Company.find(params[:company_id])
     @users = @company.users
   end
+
   def show
     @company = Company.find(params[:company_id])
     @room = Room.find(params[:id])
@@ -11,5 +13,5 @@ class RoomsController < ApplicationController
     @contents = @room.chats
     @content = Chat.new
   end
-  
+
 end
