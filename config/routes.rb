@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :companies do
-  resources :surveys
+    resources :surveys
     devise_for :users, skip: [:confirmations, :sessions], controllers: {
       registrations: 'users/registrations'
       }
