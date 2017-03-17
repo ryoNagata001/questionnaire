@@ -36,9 +36,9 @@ class CompaniesController < ApplicationController
   def update
     respond_to do |format|
       if @company.update(company_params)
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
+        redirect_to @company, notice: 'Company was successfully updated.'
       else
-        format.html { render :edit }
+        render :edit
       end
     end
   end
@@ -46,7 +46,7 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1
   def destroy
     @company.destroy
-      redirect_to companies_url, notice: 'Company was successfully destroyed.'
+      redirect_to companies_path, notice: 'Company was successfully destroyed.'
   end
 
   private
