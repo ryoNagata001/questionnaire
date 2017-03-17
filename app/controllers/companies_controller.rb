@@ -25,13 +25,11 @@ class CompaniesController < ApplicationController
     @company = Company.new(company_params)
     @company.admin_id = current_admin.id
 
-    respond_to do |format|
-      if @company.save
-        format.html { redirect_to company_new_chief_path(@company.id), notice: 'Company was successfully created.' }
-      else
-        format.html { render :new }
+    if @company.save
+      redirect_to company_new_chief_path(@company.id), notice: 'Company was successfully created.'
+    else
+      render :new
     end
-  end
   end
 
   # PATCH/PUT /companies/1
@@ -48,9 +46,7 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1
   def destroy
     @company.destroy
-    respond_to do |format|
-      format.html { redirect_to companies_url, notice: 'Company was successfully destroyed.' }
-    end
+      redirect_to companies_url, notice: 'Company was successfully destroyed.'
   end
 
   private

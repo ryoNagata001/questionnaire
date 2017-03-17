@@ -8,13 +8,7 @@ Rails.application.routes.draw do
       get 'new_chief' => 'users/registrations#new_chief'
       post 'create_chief' => 'users/registrations#create_chief'
     end
-    resources :rooms, only: [] do
-      member do
-        get :show
-      end
-      collection do
-        get :index
-      end
+    resources :rooms, only: [:show, :index] do
       resources :chats, only: :create
     end
     resources :users, :only => :show

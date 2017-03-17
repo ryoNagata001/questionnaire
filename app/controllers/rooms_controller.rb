@@ -13,5 +13,4 @@ class RoomsController < ApplicationController
     @contents = @room.chats
     @content = Chat.new
   end
-
 end

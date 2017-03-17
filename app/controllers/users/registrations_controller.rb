@@ -1,10 +1,9 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 before_action :configure_sign_up_params, only: [:create, :create_chief]
-before_action :set_company, only: [:create, :new, :create_chief, :new_chief, :update]
 
 # before_action :configure_account_update_params, only: [:update]
 def create
-  set_company
+  @company = Company.find(params[:company_id])
   @user = @company.users.create(user_params)
   @room = Room.new
   @room.user_id = @user.id
@@ -23,7 +22,7 @@ def create
 end
 
 def create_chief
-  set_company
+  @company = Company.find(params[:company_id])
   @user = @company.users.create(user_params)
   respond_to do |format|
     if @user.save
@@ -40,13 +39,13 @@ def create_chief
 end
 
 def new_chief
-  set_company
+  @company = Company.find(params[:company_id])
   @user = User.new
 end
 
   # GET /resource/sign_up
   def new
-    set_company
+    @company = Company.find(params[:company_id])
     super
   end
 
@@ -57,11 +56,11 @@ end
 
   # PUT /resource
   def update
-    set_company
+    @company = Company.find(params[:company_id])
     if @company.users.update(user_params)
-      format.html { redirect_to company_user_path(:company_id => @company.id, :id => current_user.id), notice: 'your account was successfully updated.' }
+      redirect_to company_user_path(:company_id => @company.id, :id => current_user.id), notice: 'your account was successfully updated.'
     else
-      format.html { render :edit}
+      render :edit
     end
   end
 
@@ -102,24 +101,8 @@ end
    end
 
 private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_company
-        @company = Company.find(params[:company_id])
-      end
-
       # Never trust parameters from the scary internet, only allow the white list through.
       def user_params
         params.require(:user).permit(:name, :password, :avatar, :email)
-      end
-
-      def create_user
-        @user = @company.users.create(user_params)
-        respond_to do |format|
-          if @user.save
-            format.html { redirect_to company_path(@company), notice: 'your account was successfully created.' }
-          else
-            format.html { render :new }
-          end
-        end
       end
 end
