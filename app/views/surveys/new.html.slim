@@ -1,0 +1,15 @@
+h1 New survey
+
+= form_for([@company, @company.surveys.build], url: company_surveys_path(@company.id)) do |f|
+  - if @survey.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@survey.errors.count, "error")} prohibited this survey from being saved:"
+      ul
+        - @survey.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .actions = f.submit
+= link_to 'Back', company_surveys_path(@company.id)

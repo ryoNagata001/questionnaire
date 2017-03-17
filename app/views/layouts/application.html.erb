@@ -9,7 +9,7 @@
   </head>
 
   <body>
-  <%= link_to "ログアウト", destroy_admin_session_path%>
+  <%= link_to "ログアウト", destroy_user_session_path, :method => :delete%>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>

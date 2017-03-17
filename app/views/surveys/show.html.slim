@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @survey.title
+p
+  strong Company:
+  = @survey.company
+
+= link_to 'Edit', edit_company_survey_path(:company_id =>@survey.company_id, :id => @survey.id)
+'|
+= link_to 'Back', company_surveys_path(:company_id => @survey.company_id)
