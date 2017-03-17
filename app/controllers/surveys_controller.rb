@@ -3,13 +3,11 @@ class SurveysController < ApplicationController
   before_action :set_company
 
   # GET /surveys
-  # GET /surveys.json
   def index
     @surveys = @company.surveys
   end
 
   # GET /surveys/1
-  # GET /surveys/1.json
   def show
   end
 
@@ -23,7 +21,6 @@ class SurveysController < ApplicationController
   end
 
   # POST /surveys
-  # POST /surveys.json
   def create
     @survey = @company.surveys.create(survey_params)
     respond_to do |format|
@@ -36,7 +33,6 @@ class SurveysController < ApplicationController
   end
 
   # PATCH/PUT /surveys/1
-  # PATCH/PUT /surveys/1.json
   def update
     respond_to do |format|
       if @survey.update(survey_params)
@@ -48,7 +44,6 @@ class SurveysController < ApplicationController
   end
 
   # DELETE /surveys/1
-  # DELETE /surveys/1.json
   def destroy
     @survey.destroy
     respond_to do |format|
