@@ -7,6 +7,33 @@ p
   strong Company:
   = @survey.company
 
+
+.category
+  |
+    テキストボックス
+  .question-form.active
+    p ああああああ
+.category
+  |
+    テキストエリア
+  .question-form
+    p ああああああ
+.category
+  |
+    チェックボックス
+  .question-form
+    p ああああああ
+.category
+  |
+    ラジオボタン
+  .question-form
+    p ああああああ
+.category
+  |
+    セレクトボックス
+  .question-form
+    p ああああああ
+
 = link_to 'Edit', edit_company_survey_path(:company_id =>@survey.company_id, :id => @survey.id)
 '|
 = link_to 'Back', company_surveys_path(:company_id => @survey.company_id)
