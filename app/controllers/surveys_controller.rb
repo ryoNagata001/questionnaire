@@ -9,6 +9,7 @@ class SurveysController < ApplicationController
 
   # GET /surveys/1
   def show
+    @survey = Survey.find(params[:id])
   end
 
   # GET /surveys/new
@@ -51,16 +52,44 @@ class SurveysController < ApplicationController
     end
   end
 
+  def create_text_box
+    @survey = Survey.find(params[:id])
+    @question = @survey.questions.create(question_params)
+    @question.category_id = 0
+    if @question.save
+      redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'テキストボックスが追加されました'
+    else
+      render :show
+    end
+  end
+
+  def create_text_area
+    @survey = Survey.find(params[:id])
+    @question = @survey.questions.create(question_params)
+    @question.category_id = 1
+    if @question.save
+      redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'テキストボックスが追加されました'
+    else
+      render :show
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_survey
       @survey = Survey.find(params[:id])
     end
+
      def set_company
       @company = Company.find(params[:company_id])
     end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
       params.require(:survey).permit(:title)
+    end
+
+    def question_params
+      params.require(:question).permit(:title)
     end
 end

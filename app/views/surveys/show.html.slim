@@ -11,27 +11,37 @@ p
 .category
   |
     テキストボックス
-  .question-form.active
-    p ああああああ
+.question-form.active
+    = form_for([@survey, @survey.questions.build], url: create_text_box_company_survey_path(company_id: @company.id, id: @survey.id)) do |f|
+      .field
+        = f.label :question
+        = f.text_field :title
+      .actions = f.submit
+
 .category
   |
     テキストエリア
-  .question-form
-    p ああああああ
+.question-form
+     = form_for([@survey, @survey.questions.build], url: create_text_area_company_survey_path(company_id: @company.id, id: @survey.id)) do |f|
+      .field
+        = f.label :question
+        = f.text_field :title
+      .actions = f.submit
+
 .category
   |
     チェックボックス
-  .question-form
+.question-form
     p ああああああ
 .category
   |
     ラジオボタン
-  .question-form
+.question-form
     p ああああああ
 .category
   |
     セレクトボックス
-  .question-form
+.question-form
     p ああああああ
 
 = link_to 'Edit', edit_company_survey_path(:company_id =>@survey.company_id, :id => @survey.id)
