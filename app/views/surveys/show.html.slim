@@ -10,11 +10,9 @@ p
 - @questions.each do |question|
   h2 = "Q," +  question.title
   - if question.category_id != 0 && question.category_id != 1 then
-    - count = 1
-    - question.choises.each do |choise|
-      = "選択肢" + count.to_s + "," + choise.content
+    - question.choises.each_with_index do |choise, count|
+      = "選択肢" + (count + 1).to_s + "," + choise.content
       br
-      - count += 1
 
 h2 設問追加
 .category
