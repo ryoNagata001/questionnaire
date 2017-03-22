@@ -68,7 +68,6 @@ class SurveysController < ApplicationController
   def select_create
     @survey = Survey.find(params[:id])
     @question = Question.create(question_params)
-    @question.survey_id = @survey.id
     if @question.save
       redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'チェックボックスが追加されました'
     else
@@ -95,12 +94,7 @@ class SurveysController < ApplicationController
       params.require(:question).permit(
       :title,
       :category_id,
-      choises_attributes: [:id, :content, :question_id, :_destroy])
-    end
-
-    def choise_params
-      params.require(:question).permit(
-      choises_attributes: [:id, :content, :question_id, :_destroy])
+      choises_attributes: [:id, :content, :question_id, :_destroy]).merge(survey_id: @survey.id)
     end
 
     def create_select
