@@ -10,6 +10,9 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   def show
     @survey = Survey.find(params[:id])
+    @questions = @survey.questions
+    @question = Question.new
+    @question.choises.build
   end
 
   # GET /surveys/new
@@ -52,10 +55,9 @@ class SurveysController < ApplicationController
     end
   end
 
-  def create_text_box
+  def text_create
     @survey = Survey.find(params[:id])
     @question = @survey.questions.create(question_params)
-    @question.category_id = 0
     if @question.save
       redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'テキストボックスが追加されました'
     else
@@ -63,12 +65,12 @@ class SurveysController < ApplicationController
     end
   end
 
-  def create_text_area
+  def select_create
     @survey = Survey.find(params[:id])
-    @question = @survey.questions.create(question_params)
-    @question.category_id = 1
+    @question = Question.create(question_params)
+    @question.survey_id = @survey.id
     if @question.save
-      redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'テキストボックスが追加されました'
+      redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'チェックボックスが追加されました'
     else
       render :show
     end
@@ -90,6 +92,20 @@ class SurveysController < ApplicationController
     end
 
     def question_params
-      params.require(:question).permit(:title)
+      params.require(:question).permit(
+      :title,
+      :category_id,
+      choises_attributes: [:id, :content, :question_id, :_destroy])
+    end
+
+    def choise_params
+      params.require(:question).permit(
+      choises_attributes: [:id, :content, :question_id, :_destroy])
+    end
+
+    def create_select
+      @survey = Survey.find(params[:id])
+      @question = Question.create(question_params)
+      @question.survey_id = @survey.id
     end
 end

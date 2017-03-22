@@ -7,42 +7,28 @@ p
   strong Company:
   = @survey.company
 
+- @questions.each do |question|
+  h2 = "Q," +  question.title
+  - if question.category_id != 0 && question.category_id != 1 then
+    - count = 1
+    - question.choises.each do |choise|
+      = "選択肢" + count.to_s + "," + choise.content
+      br
+      - count += 1
 
+h2 設問追加
 .category
   |
-    テキストボックス
-.question-form.active
-    = form_for([@survey, @survey.questions.build], url: create_text_box_company_survey_path(company_id: @company.id, id: @survey.id)) do |f|
-      .field
-        = f.label :question
-        = f.text_field :title
-      .actions = f.submit
-
-.category
-  |
-    テキストエリア
+    文章回答
 .question-form
-     = form_for([@survey, @survey.questions.build], url: create_text_area_company_survey_path(company_id: @company.id, id: @survey.id)) do |f|
-      .field
-        = f.label :question
-        = f.text_field :title
-      .actions = f.submit
-
+    = form_for([@survey, @survey.questions.build], url: text_create_company_survey_path(company_id: @company.id, id: @survey.id)) do |f|
+      = render partial: "text", locals: {:f => f}
 .category
   |
-    チェックボックス
+    選択回答
 .question-form
-    p ああああああ
-.category
-  |
-    ラジオボタン
-.question-form
-    p ああああああ
-.category
-  |
-    セレクトボックス
-.question-form
-    p ああああああ
+  = form_for(@question, url: select_create_company_survey_path(company_id: @company.id, id: @survey.id)) do |check_box|
+    = render partial: "select", locals: {f: check_box}
 
 = link_to 'Edit', edit_company_survey_path(:company_id =>@survey.company_id, :id => @survey.id)
 '|

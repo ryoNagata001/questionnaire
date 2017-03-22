@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   resources :companies do
     resources :surveys do
       member do
-        post 'create_text_area'
-        post 'create_text_box'
+        post 'text_create'
+        post 'select_create'
       end
     end
     devise_for :users, skip: [:confirmations, :sessions], controllers: {
