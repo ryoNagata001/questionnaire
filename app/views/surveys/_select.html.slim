@@ -3,8 +3,8 @@
   = f.label :question
   = f.text_field :title
   br
-  = f.nested_fields_for :choises do |ff|
+  = f.nested_fields_for :choices do |ff|
     = ff.text_field :content
     = ff.remove_nested_fields_link '削除'
-  = f.add_nested_fields_link :choises
+  = f.add_nested_fields_link :choices
 .actions = f.submit

@@ -10,8 +10,8 @@ p
 - @questions.each do |question|
   h2 = "Q," +  question.title
   - if !(text_question?(question))
-    - question.choises.each_with_index do |choise, count|
-      = "選択肢" + (count + 1).to_s + "," + choise.content
+    - question.choices.each_with_index do |choice, count|
+      = "選択肢" + (count + 1).to_s + "," + choice.content
       br
 
 h2 設問追加
