@@ -7,6 +7,27 @@ p
   strong Company:
   = @survey.company
 
+- @questions.each do |question|
+  h2 = "Q," +  question.title
+  - if !(text_question?(question))
+    - question.choises.each_with_index do |choise, count|
+      = "選択肢" + (count + 1).to_s + "," + choise.content
+      br
+
+h2 設問追加
+.category
+  |
+    文章回答
+.question-form
+    = form_for([@survey, @survey.questions.build], url: text_create_company_survey_path(company_id: @company.id, id: @survey.id)) do |f|
+      = render partial: "text", locals: {:f => f}
+.category
+  |
+    選択回答
+.question-form
+  = form_for(@question, url: select_create_company_survey_path(company_id: @company.id, id: @survey.id)) do |check_box|
+    = render partial: "select", locals: {f: check_box}
+
 = link_to 'Edit', edit_company_survey_path(:company_id =>@survey.company_id, :id => @survey.id)
 '|
 = link_to 'Back', company_surveys_path(:company_id => @survey.company_id)

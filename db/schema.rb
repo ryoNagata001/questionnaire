@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312071455) do
+ActiveRecord::Schema.define(version: 20170321072918) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20170312071455) do
     t.index ["room_id"], name: "index_chats_on_room_id", using: :btree
   end
 
+  create_table "choises", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "content"
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_choises_on_question_id", using: :btree
+  end
+
   create_table "companies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "password",   default: "000000"
@@ -47,6 +55,15 @@ ActiveRecord::Schema.define(version: 20170312071455) do
     t.datetime "updated_at",                    null: false
     t.integer  "chief_id"
     t.index ["admin_id"], name: "index_companies_on_admin_id", using: :btree
+  end
+
+  create_table "questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title"
+    t.integer  "category_id"
+    t.integer  "survey_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
   end
 
   create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -91,7 +108,9 @@ ActiveRecord::Schema.define(version: 20170312071455) do
   end
 
   add_foreign_key "chats", "rooms"
+  add_foreign_key "choises", "questions"
   add_foreign_key "companies", "admins"
+  add_foreign_key "questions", "surveys"
   add_foreign_key "surveys", "companies"
   add_foreign_key "users", "companies"
 end

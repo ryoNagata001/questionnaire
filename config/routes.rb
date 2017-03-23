@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :companies do
-  resources :surveys
+    resources :surveys do
+      member do
+        post 'text_create'
+        post 'select_create'
+      end
+    end
     devise_for :users, skip: [:confirmations, :sessions], controllers: {
       registrations: 'users/registrations'
       }
