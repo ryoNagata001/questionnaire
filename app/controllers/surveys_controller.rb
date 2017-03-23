@@ -12,7 +12,7 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     @questions = @survey.questions
     @question = Question.new
-    @question.choises.build
+    @question.choices.build
   end
 
   # GET /surveys/new
@@ -94,7 +94,7 @@ class SurveysController < ApplicationController
       params.require(:question).permit(
       :title,
       :category_id,
-      choises_attributes: [:id, :content, :question_id, :_destroy]).merge(survey_id: @survey.id)
+      choices_attributes: [:id, :content, :question_id, :_destroy]).merge(survey_id: @survey.id)
     end
 
     def create_select
