@@ -13,9 +13,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       redirect_to company_path(@company), notice: 'your account was successfully created.'
     end
-    else
-      render :new
-    end
   end
 
   def create_chief
