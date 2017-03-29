@@ -3,4 +3,5 @@ class Question < ApplicationRecord
   has_many :choices ,dependent: :destroy, inverse_of: :question
   accepts_nested_attributes_for :choices, allow_destroy: true
   TEXT_QUESTION_CATEGORY_IDS = [0,1]
+  has_many :answer_text ,dependent: :destroy
 end

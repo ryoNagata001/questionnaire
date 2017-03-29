@@ -1,0 +1,19 @@
+p = @survey.title
+
+- if text_question?(@question)
+  = form_for([@question, @question.answer_text.build], url: create_answer_text_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
+    h2 = @question.title
+    .field
+     = f.label :answer
+     = f.text_field :content
+    .actions = f.submit
+- else
+  = form_for([@question, @question.answer_select.build], url: create_answer_select_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
+    h2 = @question.title
+    .field
+    - @choices.each do |choice|
+     = f.check_box :choice, {multiple: true}, choice
+    .actions = f.submit
+
+- @questions.each_with_index do |question, count|
+    = link_to count + 1, company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: "#{question.id}"), data:{confirm: "回答中のアンケートは破棄されます"}
