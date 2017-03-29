@@ -8,11 +8,13 @@ p = @survey.title
      = f.text_field :content
     .actions = f.submit
 - else
-  = form_for([@question, @question.answer_select.build], url: create_answer_select_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
+  = form_for(@answer_select, url: create_answer_select_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
     h2 = @question.title
     .field
-    - @choices.each do |choice|
-     = f.check_box :choice, {multiple: true}, choice
+      - @choices.each do |choice|
+        = f.check_box :choice_ids, {multiple: true, checked: choice[:checked], disabled: choice[:disabled], include_hidden: false }, choice.id
+        = choice.content
+        br
     .actions = f.submit
 
 - @questions.each_with_index do |question, count|
