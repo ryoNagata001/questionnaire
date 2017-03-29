@@ -71,4 +71,5 @@ group :development do
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller'
 end
-
+# グラフ描画
+gem 'chartkick'

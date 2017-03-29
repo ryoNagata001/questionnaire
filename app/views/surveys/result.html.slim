@@ -1,0 +1,14 @@
+h1 = @survey.title
+
+- @questions.each do |question|
+  h2 = question.title
+  - if text_question?(question)
+    - question.answer_text.each do |answer|
+      = answer.content
+      br
+  - else
+    - result = []
+    - question.choices.each do |choice|
+      - number = choice.answer_select.count
+      - result.push(["#{choice.content}", number])
+    = column_chart result

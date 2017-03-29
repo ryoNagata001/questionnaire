@@ -4,6 +4,13 @@ Rails.application.routes.draw do
       member do
         post 'text_create'
         post 'select_create'
+        get 'result'
+      end
+      resources :questions, only: [:show] do
+        member do
+          post 'create_answer_text'
+          post 'create_answer_select'
+        end
       end
     end
     devise_for :users, skip: [:confirmations, :sessions], controllers: {
