@@ -35,7 +35,8 @@ class QuestionsController < ApplicationController
         render :show
       end
     end
-    redirect_to company_survey_question_path(company_id: @survey.company_id, survey_id: @survey.id, id: @survey.questions[@survey.questions.index(@question) + 1].id)
+    index_number = @survey.questions.index(@question) + 1
+    redirect_to company_survey_question_path(company_id: @survey.company_id, survey_id: @survey.id, id: @survey.questions[index_number].id)
   end
 
   private
