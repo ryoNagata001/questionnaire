@@ -8,6 +8,8 @@ class QuestionsController < ApplicationController
     @survey = Survey.find(params[:survey_id])
     @questions = @survey.questions
     @answer_select = AnswerSelect.new
+    @number = @survey.questions.index(@question)
+    @last_number = @survey.questions.count - 1
   end
 
   def create_answer_text

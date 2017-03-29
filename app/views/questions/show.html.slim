@@ -1,5 +1,7 @@
 p = @survey.title
 
+= "問題数残り #{@number+1} / #{@last_number+1}"
+
 - if text_question?(@question)
   = form_for([@question, @question.answer_text.build], url: create_answer_text_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
     h2 = @question.title
@@ -16,6 +18,7 @@ p = @survey.title
         = choice.content
         br
     .actions = f.submit
-
-- @questions.each_with_index do |question, count|
-    = link_to count + 1, company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: "#{question.id}"), data:{confirm: "回答中のアンケートは破棄されます"}
+- if @number != 0
+  = link_to "回答せず前へ", company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @questions[@number - 1].id), data:{confirm: "回答中のアンケートは破棄されます"}
+- if @number != @last_number
+  = link_to "回答せず次へ", company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @questions[@number + 1].id), data:{confirm: "回答中のアンケートは破棄されます"}
