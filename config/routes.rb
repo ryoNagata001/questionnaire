@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       member do
         post 'text_create'
         post 'select_create'
+        get 'result'
       end
       resources :questions, only: [:show] do
         member do
