@@ -1,5 +1,4 @@
 class RoomsController < ApplicationController
-
   def index
     @company = Company.find(params[:company_id])
     @users = @company.users

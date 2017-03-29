@@ -21,38 +21,31 @@ class SurveysController < ApplicationController
   end
 
   # GET /surveys/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /surveys
   def create
     @survey = @company.surveys.create(survey_params)
-    respond_to do |format|
-      if @survey.save
-        format.html { redirect_to company_path(@company), notice: 'Survey was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @survey.save
+      redirect_to company_path(@company), notice: 'Survey was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /surveys/1
   def update
-    respond_to do |format|
-      if @survey.update(survey_params)
-        format.html { redirect_to company_survey_path(:company_id => @survey.company_id, :id => @survey.id), notice: 'Survey was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @survey.update(survey_params)
+      redirect_to company_survey_path(company_id: @survey.company_id, id: @survey.id), notice: 'Survey was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /surveys/1
   def destroy
     @survey.destroy
-    respond_to do |format|
-      format.html { redirect_to company_surveys_url(@company), notice: 'Survey was successfully destroyed.' }
-    end
+    redirect_to company_surveys_url(@company), notice: 'Survey was successfully destroyed.'
   end
 
   def text_create
@@ -81,25 +74,26 @@ class SurveysController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_survey
       @survey = Survey.find(params[:id])
     end
 
-     def set_company
+    def set_company
       @company = Company.find(params[:company_id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
       params.require(:survey).permit(:title)
     end
 
     def question_params
       params.require(:question).permit(
-      :title,
-      :category_id,
-      choices_attributes: [:id, :content, :question_id, :_destroy]).merge(survey_id: @survey.id)
+        :title,
+        :category_id,
+        choices_attributes: [:id, :content, :question_id, :_destroy]
+      ).merge(survey_id: @survey.id)
     end
 
     def create_select

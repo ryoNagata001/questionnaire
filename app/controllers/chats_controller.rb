@@ -4,14 +4,15 @@ class ChatsController < ApplicationController
   def create
     @company = Company.find(params[:company_id])
     @chat = @room.chats.create(chat_params)
-      if @chat.save
-        redirect_to company_room_path(company_id: @company.id, :id: @room.id), notice: 'your account was successfully created.'
-      else
-        render :new
-      end
+    if @chat.save
+      redirect_to company_room_path(company_id: @company.id, id: @room.id), notice: 'your account was successfully created.'
+    else
+      render :new
+    end
   end
 
   private
+
     def set_room
       @room = Room.find(params[:room_id])
     end

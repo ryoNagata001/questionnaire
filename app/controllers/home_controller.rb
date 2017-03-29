@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def top
-    @message = "ようこそQuestionnaryへ"
+    @message = 'ようこそQuestionnaryへ'
   end
-  def about
-  end
+
+  def about; end
 end

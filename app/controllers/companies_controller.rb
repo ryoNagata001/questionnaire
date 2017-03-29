@@ -17,8 +17,7 @@ class CompaniesController < ApplicationController
   end
 
   # GET /companies/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /companies
   def create
@@ -34,28 +33,29 @@ class CompaniesController < ApplicationController
 
   # PATCH/PUT /companies/1
   def update
-    respond_to do |format|
-      if @company.update(company_params)
-        redirect_to @company, notice: 'Company was successfully updated.'
-      else
-        render :edit
-      end
+    if @company.update(company_params)
+      redirect_to @company, notice: 'Company was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /companies/1
   def destroy
-    @company.destroy
+    if @company.destroy
       redirect_to companies_path, notice: 'Company was successfully destroyed.'
+    else
+      render :show
+    end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_company
       @company = Company.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def company_params
       params.require(:company).permit(:name, :password)
     end
