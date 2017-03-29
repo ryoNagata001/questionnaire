@@ -18,9 +18,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @answer_text = AnswerText.create(answer_text_params)
     if @answer_text.save
-      number = @survey.questions.index(@question)
-      next_question = number + 1
-      redirect_to company_survey_question_path(company_id: @survey.company_id, survey_id: @survey.id, id: @survey.questions[next_question].id)
+      redirect_to company_survey_question_path(company_id: @survey.company_id, survey_id: @survey.id, id: @survey.questions[@survey.questions.index(@question) + 1].id)
     else
       render :show
     end
@@ -37,9 +35,7 @@ class QuestionsController < ApplicationController
         render :show
       end
     end
-    number = @survey.questions.index(@question)
-    next_question = number + 1
-    redirect_to company_survey_question_path(company_id: @survey.company_id, survey_id: @survey.id, id: @survey.questions[next_question].id)
+    redirect_to company_survey_question_path(company_id: @survey.company_id, survey_id: @survey.id, id: @survey.questions[@survey.questions.index(@question) + 1].id)
   end
 
   private
