@@ -8,12 +8,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @room = Room.new
     @room.user_id = @user.id
     @room.chief_id = @company.chief_id
-    if @user.save
-      if @room.save
-        redirect_to company_path(@company), notice: 'your account was successfully created.'
-      else
-        render :new
-      end
+    unless @user.save or @room.save
+      render :new
+    else
+      redirect_to company_path(@company), notice: 'your account was successfully created.'
+    end
     else
       render :new
     end
@@ -22,15 +21,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create_chief
     @company = Company.find(params[:company_id])
     @user = @company.users.create(user_params)
-    if @user.save
-      @company.chief_id = @user.id
-      if @company.save
-        redirect_to company_path(@company), notice: 'chief user was successfully created'
-      else
-        render :new
-      end
-    else
+    @company.chief_id = @user.id
+    unless @user.save or @company.save
       render :new
+    else
+      redirect_to company_path(@company), notice: 'chief user was successfully created'
     end
   end
 
