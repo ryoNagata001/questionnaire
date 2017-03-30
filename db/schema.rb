@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323072826) do
+ActiveRecord::Schema.define(version: 20170329035748) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -28,6 +28,25 @@ ActiveRecord::Schema.define(version: 20170323072826) do
     t.string   "name",                   default: "", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "answer_selects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "choice_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["choice_id"], name: "index_answer_selects_on_choice_id", using: :btree
+    t.index ["user_id"], name: "index_answer_selects_on_user_id", using: :btree
+  end
+
+  create_table "answer_texts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "question_id"
+    t.string   "content"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_answer_texts_on_question_id", using: :btree
+    t.index ["user_id"], name: "index_answer_texts_on_user_id", using: :btree
   end
 
   create_table "chats", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -107,6 +126,10 @@ ActiveRecord::Schema.define(version: 20170323072826) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "answer_selects", "choices"
+  add_foreign_key "answer_selects", "users"
+  add_foreign_key "answer_texts", "questions"
+  add_foreign_key "answer_texts", "users"
   add_foreign_key "chats", "rooms"
   add_foreign_key "choices", "questions"
   add_foreign_key "companies", "admins"
