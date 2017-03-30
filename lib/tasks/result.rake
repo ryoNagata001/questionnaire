@@ -1,5 +1,5 @@
 namespace :result do
-  desc '設問ごとの回答数を表示する'
+  desc 'idを渡すと設問ごとの回答数を表示する'
   task :how_many,['question_id'] => :environment do |task, args|
     question = Question.find(args.question_id)
     id_number = []
