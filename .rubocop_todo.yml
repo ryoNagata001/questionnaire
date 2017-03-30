@@ -62,8 +62,7 @@ Style/Documentation:
 Style/EmptyLines:
   Exclude:
     - 'Gemfile'
-    - 'db/migrate/20170303090218_devise_create_admins.rb'
-    - 'db/migrate/20170308063044_devise_create_users.rb'
+    - 'db/migrate/*'
 
 # Offense count: 1
 # Cop supports --auto-correct.

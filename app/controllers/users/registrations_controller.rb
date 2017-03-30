@@ -5,25 +5,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @company = Company.find(params[:company_id])
     @user = @company.users.create(user_params)
-    @room = Room.new
-    @room.user_id = @user.id
-    @room.chief_id = @company.chief_id
-    if @user.save && @room.save
-      redirect_to company_path(@company), notice: 'your account was successfully created.'
-    else
-      render :new
+    ActiveRecord::Base.transaction do
+      @user.save!
+      @room = Room.create(
+        user_id: @user.id,
+        chief_id: @company.chief_id
+      )
+      @room.save!
     end
+      redirect_to company_path(@company), notice: 'your account was successfully created.'
+    rescue => e
+      render :new
   end
 
   def create_chief
     @company = Company.find(params[:company_id])
     @user = @company.users.create(user_params)
-    @company.chief_id = @user.id
-    unless @user.save or @company.save
-      render :new
-    else
-      redirect_to company_path(@company), notice: 'chief user was successfully created'
+    ActiveRecord::Base.transaction do
+      @user.save!
+      @company.chief_id = @user.id
+      @company.update!
     end
+      redirect_to company_path(@company), notice: 'chief user was successfully created'
+    rescue => e
+      render :new
   end
 
   def new_chief
