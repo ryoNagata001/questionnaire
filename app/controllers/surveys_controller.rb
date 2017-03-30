@@ -36,7 +36,10 @@ class SurveysController < ApplicationController
   # PATCH/PUT /surveys/1
   def update
     if @survey.update(survey_params)
-      redirect_to company_survey_path(company_id: @survey.company_id, id: @survey.id), notice: 'Survey was successfully updated.'
+      redirect_to company_survey_path(
+        company_id: @survey.company_id,
+        id: @survey.id
+      ), notice: 'Survey was successfully updated.'
     else
       render :edit
     end
@@ -52,7 +55,10 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     @question = @survey.questions.create(question_params)
     if @question.save
-      redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'テキストボックスが追加されました'
+      redirect_to company_survey_path(
+        company_id: @company.id,
+        id: @survey.id
+      ), notice: 'テキストボックスが追加されました'
     else
       render :show
     end
@@ -62,7 +68,10 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     @question = Question.create(question_params)
     if @question.save
-      redirect_to company_survey_path(company_id: @company.id, id: @survey.id), notice: 'チェックボックスが追加されました'
+      redirect_to company_survey_path(
+        company_id: @company.id,
+        id: @survey.id
+      ), notice: 'チェックボックスが追加されました'
     else
       render :show
     end

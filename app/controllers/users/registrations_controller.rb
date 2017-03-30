@@ -8,10 +8,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @room = Room.new
     @room.user_id = @user.id
     @room.chief_id = @company.chief_id
-    unless @user.save or @room.save
-      render :new
-    else
+    if @user.save && @room.save
       redirect_to company_path(@company), notice: 'your account was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -46,7 +46,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update
     @company = Company.find(params[:company_id])
     if @company.users.update(user_params)
-      redirect_to company_user_path(company_id: @company.id, id: current_user.id), notice: 'your account was successfully updated.'
+      redirect_to company_user_path(
+        company_id: @company.id,
+        id: current_user.id
+      ), notice: 'your account was successfully updated.'
     else
       render :edit
     end

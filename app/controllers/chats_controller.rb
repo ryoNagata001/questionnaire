@@ -5,7 +5,10 @@ class ChatsController < ApplicationController
     @company = Company.find(params[:company_id])
     @chat = @room.chats.create(chat_params)
     if @chat.save
-      redirect_to company_room_path(company_id: @company.id, id: @room.id), notice: 'your account was successfully created.'
+      redirect_to company_room_path(
+        company_id: @company.id,
+        id: @room.id
+      ), notice: 'your account was successfully created.'
     else
       render :new
     end
@@ -17,7 +20,6 @@ class ChatsController < ApplicationController
       @room = Room.find(params[:room_id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def chat_params
       params.require(:chat).permit(:content)
     end
