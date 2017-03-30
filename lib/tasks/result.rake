@@ -6,7 +6,7 @@ namespace :result do
     questions.each do |question|
       id_number = []
       if question.category_id == 0 || question.category_id == 1
-        answers = question.answer_text
+        answers = question.answer_texts
         answers.each do |answer|
           unless id_number.include?(answer.id)
             id_number.push(answer.id)
@@ -15,7 +15,7 @@ namespace :result do
       else
         choices = question.choices
         choices.each do |choice|
-          answers = choice.answer_select
+          answers = choice.answer_selects
           answers.each do |answer|
             unless id_number.include?(answer.id)
               id_number.push(answer.id)
