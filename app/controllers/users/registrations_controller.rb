@@ -7,7 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = @company.users.create(user_params)
     ActiveRecord::Base.transaction do
       @user.save!
-      @room = Room.create(
+      @room = Room.new(
         user_id: @user.id,
         chief_id: @company.chief_id
       )
