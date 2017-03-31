@@ -4,18 +4,15 @@ namespace :result do
     survey = Survey.find(args.survey_id)
     questions = survey.questions
     questions.each do |question|
-      user_ids = []
       if Question::TEXT_QUESTION_CATEGORY_IDS.include?(question.category_id)
-        answers = question.answer_texts
-        user_ids = answers.map{|answer| answer.id}.uniq
-        puts "Q,#{question.title}: 回答#{user_ids.count}個"
+        puts "Q,#{question.title}: 回答#{question.answer_texts.count}個"
       else
-        choices = question.choices
-        choices.each do |choice|
-          answers = choice.answer_selects
-          user_ids = answers.map{|answer| answer.user_id}.uniq
+        user_ids = []
+        question.choices.each do |choice|
+          selected_users = choice.answer_selects.map{|answer| answer.user_id}
+          user_ids.concat(selected_users)
         end
-        puts "Q,#{question.title}: 回答#{user_ids.count}人"
+        puts "Q,#{question.title}: 回答#{user_ids.uniq.count}人"
       end
     end
   end
