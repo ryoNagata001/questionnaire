@@ -1,14 +1,15 @@
 class SlackNoticeService
-  def initialize(url, comment)
+  def initialize(url, text)
     @url = url
-    @comment = comment
+    @text = text
   end
 
   def notification
-    HTTParty.post(url, body: { "text": comment }.to_json)
+    HTTParty.post(url, body: { "text": text }.to_json)
   end
 
   private
 
-    attr_reader :url, :comment
+    attr_reader :url, :text
 end
+
