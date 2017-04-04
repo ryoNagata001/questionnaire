@@ -1,2 +1,6 @@
-- I18n.locale = :en
+- if @locale == "en"
+  - I18n.locale = :en
 h1 = t('.welcome')
+
+
+= link_to "English" , root_path(locale: "en") 
