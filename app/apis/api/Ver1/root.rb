@@ -7,6 +7,12 @@ module API
       # formatでAPIのレスポンスデータのフォーマットをjsonに指定しています
       format :json
 
+      # Use ActiveModelSerializers
+      use Grape::Middleware::Globals
+      require 'grape/active_model_serializers'
+      include Grape::ActiveModelSerializers
+      formatter :json, Grape::Formatters::ActiveModelSerializers
+
       mount API::Ver1::CompanyMembers
     end
   end
