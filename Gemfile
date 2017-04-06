@@ -77,3 +77,5 @@ gem 'chartkick'
 gem 'active_model_serializers'
 # RestfulなWEB-APIが簡単に作成できる
 gem 'grape'
+# slack連携
+gem 'httparty'

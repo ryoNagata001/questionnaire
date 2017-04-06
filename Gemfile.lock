@@ -100,6 +100,7 @@ GEM
     ffi (1.9.18)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+<<<<<<< HEAD
     grape (0.19.1)
       activesupport
       builder
@@ -111,6 +112,10 @@ GEM
       rack-accept
       virtus (>= 1.0.0)
     hashie (3.5.5)
+=======
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
+>>>>>>> 657f50f954f4b9ae80fe97d7fd3c457e7b309144
     i18n (0.8.1)
     ice_nine (0.11.2)
     jbuilder (2.6.3)
@@ -265,6 +270,7 @@ DEPENDENCIES
   config
   devise
   grape
+  httparty
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

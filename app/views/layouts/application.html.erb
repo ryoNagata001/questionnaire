@@ -13,5 +13,10 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
+    <br>
+    <footer>
+  <%= link_to "English" , root_path(locale: "en")%>
+  <%= link_to "日本語" , root_path(locale: "ja")%>
+  </footer>
   </body>
 </html>
