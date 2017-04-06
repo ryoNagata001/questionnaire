@@ -73,3 +73,5 @@ group :development do
 end
 # グラフ描画
 gem 'chartkick'
+# slack連携
+gem 'httparty'
