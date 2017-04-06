@@ -73,5 +73,9 @@ group :development do
 end
 # グラフ描画
 gem 'chartkick'
+# 簡単で素早くjsonが作れる
+gem 'active_model_serializers'
+# RestfulなWEB-APIが簡単に作成できる
+gem 'grape'
 # slack連携
 gem 'httparty'
