@@ -13,5 +13,7 @@ module Questionnaire
     # -- all .rb files in that directory are automatically loaded.
   config.autoload_paths += Dir[Rails.root.join('app', 'uploaders')]
   config.autoload_paths += %W(#{config.root}/app/services)
+  config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+  config.i18n.default_locale = :ja
   end
 end
