@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
     end
     @survey = Survey.find(params[:survey_id])
     @question = Question.find(params[:id])
-    @answer_text = AnswerText.create(answer_text_params)
+    @answer_text = AnswerText.new(answer_text_params)
     if @answer_text.save
       redirect_to company_survey_question_path(
         company_id: @survey.company_id,
@@ -34,7 +34,7 @@ class QuestionsController < ApplicationController
     user_id = current_user.id
     @answer_selects = answer_select_params
     @answer_selects[:choice_ids].each do |choice|
-      @answer_select = AnswerSelect.create(user_id: user_id, choice_id: choice)
+      @answer_select = AnswerSelect.new(user_id: user_id, choice_id: choice)
       unless @answer_select.save
         render :show
       end
