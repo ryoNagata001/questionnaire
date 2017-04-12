@@ -1,10 +1,20 @@
 class SurveysController < ApplicationController
-  before_action :set_survey, only: [:show, :edit, :update, :destroy]
+  before_action :set_survey, only: [:release, :show, :edit, :update, :destroy]
   before_action :set_company
 
   # GET /surveys
   def index
     @surveys = @company.surveys
+  end
+
+  def release
+    if @survey.release
+      @survey.update(release: false)
+      redirect_to company_surveys_path(@company)
+    else
+      @survey.update(release: true)
+      redirect_to company_surveys_path(@company)
+    end
   end
 
   # GET /surveys/1
@@ -27,7 +37,7 @@ class SurveysController < ApplicationController
   def create
     @survey = @company.surveys.create(survey_params)
     if @survey.save
-      redirect_to company_path(@company), notice: 'Survey was successfully created.'
+      redirect_to company_survey_path(company_id: @company.id, id: @survey.id)
     else
       render :new
     end

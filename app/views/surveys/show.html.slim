@@ -1,20 +1,18 @@
 p#notice = notice
 
+h1  = link_to @survey.title, edit_company_survey_path(:company_id => @company.id, :id => @survey.id)
 p
-  strong Title:
-  = @survey.title
-p
-  strong Company:
-  = @survey.company.name
+  h2 = "Company: " + @survey.company.name
 
 - @questions.each do |question|
   h2 = "Q," +  question.title
   - if !(text_question?(question))
+  p
     - question.choices.each_with_index do |choice, count|
-      = "選択肢" + (count + 1).to_s + "," + choice.content
+      = (count + 1).to_s + "," + choice.content
       br
 
-h2 設問追加
+h3 設問追加
 .category
   |
     文章回答
