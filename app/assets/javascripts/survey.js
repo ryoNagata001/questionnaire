@@ -1,4 +1,4 @@
-jQuery(function($){
+jQuery(document).ready(function($){
   jQuery('.category').click(function(){
     jQuery('.active').slideUp();
     jQuery('.active').removeClass('active');

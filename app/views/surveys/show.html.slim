@@ -5,7 +5,7 @@ p
   = @survey.title
 p
   strong Company:
-  = @survey.company
+  = @survey.company.name
 
 - @questions.each do |question|
   h2 = "Q," +  question.title

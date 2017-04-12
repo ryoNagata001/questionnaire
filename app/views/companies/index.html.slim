@@ -4,8 +4,7 @@ table
   thead
     tr
       th Name
-      th Password
-      th Admin
+      th 登録した人
       th
       th
       th
@@ -13,13 +12,12 @@ table
   tbody
     - @companies.each do |company|
       tr
-        td = company.name
-        td = company.password
-        td = company.admin
-        td = link_to 'Show', company
+        td = link_to company.name, company
+        td = company.admin.name
         td = link_to 'Edit', edit_company_path(company)
         td = link_to 'Destroy', company, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
 = link_to 'New Company', new_company_path
+= link_to 'Back', root_path

@@ -2,10 +2,10 @@ p = @survey.title
 - question_number = @survey.questions.index(@question)
 - total_question_number = @survey.questions.count
 
-= "問題数残り #{question_number+1} / #{total_question_number}"
+= "問題数 #{question_number + 1} / #{total_question_number}"
 
 - if text_question?(@question)
-  = form_for([@question, @question.answer_text.build], url: create_answer_text_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
+  = form_for([@question, @question.answer_texts.build], url: create_answer_text_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
     h2 = @question.title
     .field
      = f.label :answer

@@ -9,7 +9,35 @@
   </head>
 
   <body>
-  <%= link_to "ログアウト", destroy_user_session_path, :method => :delete%>
+  <header class="navbar">
+    <div class="container">
+      <div id="logo">Questionnaire</div>
+      <ul class="header-right">
+        <li><%= link_to "Top", root_path %></li>
+        <% unless current_user.nil?%>
+          <li><%= link_to current_user.name, company_user_path(company_id: current_user.company_id, id: current_user.id)%></li>
+          <li><%= link_to "アンケート一覧", company_surveys_path(company_id: current_user.company_id) %></li>
+          <li><%= link_to "チャット", company_room_path(company_id: current_user.company_id, id: current_user.room.id) %></li>
+          <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+          <% if current_user.id == current_user.company.chief_id%>
+            <%= link_to "社員一覧", company_rooms_path(current_user.company.id)%>
+          <% end %>
+        <% else %>
+            <li><%= link_to "ログイン", new_user_session_path %></li>
+        <% end %>
+        <% unless current_admin.nil?%>
+          <li><%= link_to current_admin.name, edit_admin_registration_path %></li>
+          <li><%= link_to "登録法人一覧", companies_path %></li>
+          <li><%= link_to "ログアウト", destroy_admin_session_path, method: :delete %></li>
+        <% end %>
+        <li class=avatar>
+        <% unless current_user.nil? || current_user.avatar.nil? %>
+          <%= image_tag current_user.avatar %>
+        <% end %>
+        </li>
+      </ul>
+    </div>
+  </header>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
@@ -17,6 +45,11 @@
     <footer>
   <%= link_to "English" , root_path(locale: "en")%>
   <%= link_to "日本語" , root_path(locale: "ja")%>
+  <div class=footer_left>
+    <% if current_admin.nil? && current_user.nil? %>
+      <%= link_to "アドミンログイン", new_admin_session_path%>
+    <% end %>
+  </div>
   </footer>
   </body>
 </html>

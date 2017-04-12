@@ -1,3 +1,6 @@
+- unless current_user.nil?
+  h2 このページのURLを新規登録者に送ってください
+- else
 h2
   | Sign up
 = form_for([@company, @company.users.build], url: user_company_registration_path(@company.id)) do |f|

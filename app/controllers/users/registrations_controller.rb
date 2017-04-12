@@ -13,7 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       )
       @room.save!
     end
-      redirect_to company_path(@company), notice: 'your account was successfully created.'
+      redirect_to company_path(@company), notice: 'Send email to your address, please check your account'
     rescue => e
       render :new
   end
@@ -50,7 +50,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     @company = Company.find(params[:company_id])
-    if @company.users.update(user_params)
+    user = current_user
+    if resource.update_with_password(user_params)
       redirect_to company_user_path(
         company_id: @company.id,
         id: current_user.id
@@ -84,6 +85,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :password, :avatar, :email)
+      params.require(:user).permit(:name, :current_password,:password_confirmation,:password, :avatar, :email)
     end
 end
