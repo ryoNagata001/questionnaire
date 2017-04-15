@@ -86,3 +86,9 @@ group :development, :test do
   gem 'pry-byebug' # デバッグを実施(Ruby 2.0以降で動作する)
   gem 'pry-stack_explorer' # スタックをたどれる
 end
+# 非同期処理
+gem "delayed_job"
+gem "delayed_job_active_record"
+
+# デプロイ先でデーモンとして動かすのに必要
+gem "daemons"

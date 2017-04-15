@@ -9,8 +9,9 @@
     - if content.transmittion_user_id == @company.chief_id
       h2 = @chief.name
     - else
-      = @user.name
-    p = content.content
+      p
+        strong = @user.name + "："
+        = content.content
 
 = form_for([@room, @room.chats.build], url: company_room_chats_path(:company_id => @company.id, :room_id => @room.id)) do |f|
   .field

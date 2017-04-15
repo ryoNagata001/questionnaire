@@ -8,7 +8,7 @@ class ChatsController < ApplicationController
       redirect_to company_room_path(
         company_id: @company.id,
         id: @room.id
-      ), notice: 'your account was successfully created.'
+      ), notice: 'your message was successfully send'
     else
       render :new
     end
