@@ -47,6 +47,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = current_user
   end
 
+  def destroy
+    @company = Company.find(params[:company_id])
+    @user = User.find(params[:id])
+    if User.destroy(@user)
+      redirect_to company_rooms_path(company_id: @company.id)
+    end
+  end
+
   # PUT /resource
   def update
     @company = Company.find(params[:company_id])

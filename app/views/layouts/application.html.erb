@@ -14,10 +14,14 @@
       <div id="logo">Questionnaire</div>
       <ul class="header-right">
         <li><%= link_to "Top", root_path %></li>
-        <% unless current_user.nil?%>
+        <% unless current_user.nil? %>
           <li><%= link_to current_user.name, company_user_path(company_id: current_user.company_id, id: current_user.id)%></li>
           <li><%= link_to "アンケート一覧", user_index_company_surveys_path(company_id: current_user.company_id) %></li>
+          <% if current_user.company.chief_id != current_user.id%>
           <li><%= link_to "チャット", company_room_path(company_id: current_user.company_id, id: current_user.room.id) %></li>
+          <% else %>
+          <li><%= link_to "社員一覧", company_rooms_path(company_id: current_user.company_id) %></li>
+          <% end %>
           <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
           <% if current_user.id == current_user.company.chief_id%>
             <%= link_to "社員一覧", company_rooms_path(current_user.company.id)%>
