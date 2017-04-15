@@ -6,6 +6,9 @@ p
 
 - @questions.each do |question|
   h2 = "Q," +  question.title
+  = link_to 'delete', company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: question.id), method: :delete
+  br
+  = link_to 'edit', edit_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: question.id)
   - if !(text_question?(question))
   p
     - question.choices.each_with_index do |choice, count|

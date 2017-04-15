@@ -12,10 +12,13 @@ Rails.application.routes.draw do
       collection do
         get 'user_index'
       end
-      resources :questions, only: [:show] do
+      resources :questions, only: [:show, :destroy] do
         member do
           post 'create_answer_text'
           post 'create_answer_select'
+          get 'edit'
+          patch 'update_select'
+          patch 'update_text'
         end
         collection do
           get 'wrong_question'

@@ -55,10 +55,63 @@ class QuestionsController < ApplicationController
     end_check
   end
 
+  def destroy
+    @survey = Survey.find(params[:survey_id])
+    @company = Company.find(params[:company_id])
+    @question = Question.find(params[:id])
+    if @question.destroy
+      redirect_to company_survey_path(company_id: @company.id, survey_id: @survey.id)
+    else
+      render '/'
+    end
+  end
+
+  def edit
+    @survey = Survey.find(params[:survey_id])
+    @company = Company.find(params[:company_id])
+    @question = Question.find(params[:id])
+  end
+
+  def update_select
+    @survey = Survey.find(params[:survey_id])
+    @company = Company.find(params[:company_id])
+    temp = params.require(:question).permit(
+      :category_id,
+      :title
+    )
+    @question = Question.find(params[:id])
+    @question.update(temp)
+    temp = params.require(:question).permit(choices_attributes: [:content, :id, :_destroy])
+    temp[:choices_attributes].each do |key, choice|
+      if choice[:id].nil?
+        unless choice[:delete]
+        Choice.create(question_id: @question.id, content: choice[:content])
+        end
+      else
+        choice_target = Choice.find(choice[:id])
+        if choice[:_destroy]
+          Choice.destroy(choice_target)
+        else
+          choice_target.update(choice)
+        end
+      end
+    end
+    redirect_to company_survey_path(company_id: @company.id, id: @question.survey_id)
+  end
+
+  def update_text
+    @survey = Survey.find(params[:survey_id])
+    @company = Company.find(params[:company_id])
+    temp = params.require(:question).permit(:category_id, :title)
+    @question = Question.find(params[:id])
+    @question.update(temp)
+    redirect_to company_survey_path(company_id: @company.id, id: @question.survey_id)
+  end
+
   private
 
     def answer_text_params
-      params.require(:answer_text).permit(:content).merge(
+      params.require(:answer_text).permit(:category_id, :title).merge(
         question_id: @question.id,
         user_id: current_user.id
       )
