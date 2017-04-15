@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415112542) do
+ActiveRecord::Schema.define(version: 20170415120625) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -102,6 +102,16 @@ ActiveRecord::Schema.define(version: 20170415112542) do
     t.index ["company_id"], name: "index_surveys_on_company_id", using: :btree
   end
 
+  create_table "user_surveys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "survey_id"
+    t.integer  "question_number", default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["survey_id"], name: "index_user_surveys_on_survey_id", using: :btree
+    t.index ["user_id"], name: "index_user_surveys_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -137,5 +147,7 @@ ActiveRecord::Schema.define(version: 20170415112542) do
   add_foreign_key "companies", "admins"
   add_foreign_key "questions", "surveys"
   add_foreign_key "surveys", "companies"
+  add_foreign_key "user_surveys", "surveys"
+  add_foreign_key "user_surveys", "users"
   add_foreign_key "users", "companies"
 end

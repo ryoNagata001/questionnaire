@@ -7,11 +7,18 @@ Rails.application.routes.draw do
         get 'result'
         post 'release'
         get 'top'
+        get 'end_of_question'
+      end
+      collection do
+        get 'user_index'
       end
       resources :questions, only: [:show] do
         member do
           post 'create_answer_text'
           post 'create_answer_select'
+        end
+        collection do
+          get 'wrong_question'
         end
       end
     end

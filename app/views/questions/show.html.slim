@@ -20,7 +20,3 @@ p = @survey.title
         = choice.content
         br
     .actions = f.submit
-- if question_number != 0
-  = link_to "回答せず前へ", company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @questions[question_number - 1].id), data:{confirm: "回答中のアンケートは破棄されます"}
-- if question_number != total_question_number - 1
-  = link_to "回答せず次へ", company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @questions[question_number + 1].id), data:{confirm: "回答中のアンケートは破棄されます"}

@@ -94,6 +94,24 @@ class SurveysController < ApplicationController
 
   def top
     @survey = Survey.find(params[:id])
+    if current_user.company_id != @survey.company_id
+      redirect_to wrong_question_company_survey_questions_path(company_path: @company.id, survey_id: @survey.id)
+    else
+      if UserSurvey.find_by(survey_id: @survey.id, user_id: current_user.id).nil?
+        UserSurvey.create(survey_id: @survey.id, user_id: current_user.id)
+      end
+    end
+  end
+
+  def user_index
+    @surveys = @company.surveys
+    @user_surveys = UserSurvey.where(user_id: current_user.id)
+    @survey_ids = UserSurvey.where(user_id: current_user).pluck(:survey_id)
+  end
+
+  def end_of_question
+    @company = Company.find(params[:company_id])
+    @survey = Survey.find(params[:id])
   end
 
   private
