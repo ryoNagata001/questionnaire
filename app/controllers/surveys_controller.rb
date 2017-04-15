@@ -92,6 +92,10 @@ class SurveysController < ApplicationController
     @questions = @survey.questions
   end
 
+  def top
+    @survey = Survey.find(params[:id])
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -104,7 +108,7 @@ class SurveysController < ApplicationController
     end
 
     def survey_params
-      params.require(:survey).permit(:title)
+      params.require(:survey).permit(:title, :description)
     end
 
     def question_params

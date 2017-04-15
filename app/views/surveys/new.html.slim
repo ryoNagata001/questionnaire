@@ -11,5 +11,7 @@ h1 New survey
   .field
     = f.label :title
     = f.text_field :title
+    = f.label :title
+    = f.text_field :description
   .actions = f.submit
 = link_to 'Back', company_surveys_path(@company.id)

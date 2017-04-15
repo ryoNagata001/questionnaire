@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         post 'select_create'
         get 'result'
         post 'release'
+        get 'top'
       end
       resources :questions, only: [:show] do
         member do
