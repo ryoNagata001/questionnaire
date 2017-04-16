@@ -23,9 +23,6 @@
           <li><%= link_to "社員一覧", company_rooms_path(company_id: current_user.company_id) %></li>
           <% end %>
           <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
-          <% if current_user.id == current_user.company.chief_id%>
-            <%= link_to "社員一覧", company_rooms_path(current_user.company.id)%>
-          <% end %>
         <% else %>
             <li><%= link_to "ログイン", new_user_session_path %></li>
         <% end %>
