@@ -55,7 +55,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # slim
 gem 'slim-rails'
 # Bootstrap
-gem 'bootstrap-sass'
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+
 # Devise
 gem 'devise'
 # CarrierWave
