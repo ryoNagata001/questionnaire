@@ -1,6 +1,8 @@
 class SurveysController < ApplicationController
   before_action :set_survey, only: [:release, :show, :edit, :update, :destroy]
+  before_action :are_you_admin?, only: [:index, :show, :new, ]
   before_action :set_company
+  before_action :are_you_company_member?, only: [:result, :top, :user_index]
 
   # GET /surveys
   def index
@@ -141,5 +143,19 @@ class SurveysController < ApplicationController
       @survey = Survey.find(params[:id])
       @question = Question.create(question_params)
       @question.survey_id = @survey.id
+    end
+
+    def are_you_admin?
+      if current_admin.nil?
+        redirect_to '/', notice: 'you can not access this page'
+      end
+    end
+
+    def are_you_company_member?
+      if current_user.nil? && current_admin.nil?
+        redirect_to '/', notice: "please sign in as a user"
+      elsif current_user.company_id != @company.id
+        redirect_to '/', notice: 'you can not access this page'
+      end
     end
 end

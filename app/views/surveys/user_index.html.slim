@@ -1,0 +1,26 @@
+- unless @user_surveys.nil?
+  h2 回答済みのアンケートの結果を見る
+  p
+    - @user_surveys.each do |user_survey|
+      - if user_survey.question_number == Survey.find(user_survey.survey_id).questions.count
+        = link_to Survey.find(user_survey.survey.id).title, result_company_survey_path(company_id: @company.id, id: user_survey.survey_id)
+        br
+
+  h2 回答中のアンケートの結果を見る
+  p
+    - @user_surveys.each do |user_survey|
+      - if user_survey.question_number < Survey.find(user_survey.survey_id).questions.count
+        = link_to Survey.find(user_survey.survey.id).title, company_survey_question_path(company_id: @company.id, survey_id: user_survey.survey_id, id: Survey.find(user_survey.survey_id).questions[user_survey.question_number].id)
+        br
+
+  h2 未回答のアンケートに回答する
+  p
+    - @surveys.each do |survey|
+      - unless @survey_ids.include?(survey.id)
+        = link_to survey.title, top_company_survey_path(company_id: @company.id, id: survey.id)
+        br
+- else
+  h2 未回答のアンケートに回答する
+  - @surveys.each do |survey|
+    = link_to survey.title, top_company_survey_path(company_id: @company.id, id: survey.id)
+    br

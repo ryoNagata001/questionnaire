@@ -1,5 +1,8 @@
 class QuestionsController < ApplicationController
+  before_action :are_you_admin?, only: :edit
+
   def show
+    are_you_company_member?
     @company = Company.find(params[:company_id])
     @survey = Survey.find(params[:survey_id])
     @questions = @survey.questions
@@ -120,7 +123,6 @@ class QuestionsController < ApplicationController
     def answer_select_params
       params.require(:answer_select).permit(choice_ids: [])
     end
-end
 
     def end_check
       @company = Company.find(params[:company_id])
@@ -134,3 +136,18 @@ end
     )
       end
     end
+
+    def are_you_admin?
+      if current_admin.nil?
+        redirect_to '/', notice: "you can not access this page"
+      end
+    end
+
+    def are_you_company_member?
+      if current_user.nil?
+        redirect_to '/', notice: "please sign in as a user to show this page"
+      elsif current_user.company_id != params[:company_id].to_i
+        redirect_to '/', notice: 'you do not have right to access'
+      end
+    end
+end

@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :are_you_admin?, only: [:index, :show, :new, :edit]
 
   # GET /companies
   def index
@@ -71,6 +72,12 @@ class CompaniesController < ApplicationController
         if user.id != @company.chief_id
           Room.create(chief_id: @company.chief_id, user_id: user.id)
         end
+      end
+    end
+
+    def are_you_admin?
+      if current_admin.nil?
+        redirect_to '/', notice: 'You do not have right to access.'
       end
     end
 end
