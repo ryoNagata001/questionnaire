@@ -1,4 +1,5 @@
 class ChatsController < ApplicationController
+  layout :set_layout
   before_action :set_room, only: :create
 
   def create

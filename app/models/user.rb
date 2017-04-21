@@ -8,4 +8,5 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
   has_many :answer_texts, dependent: :destroy
   has_many :answer_selects, dependent: :destroy
+  has_many :user_surveys, dependent: :destroy
 end

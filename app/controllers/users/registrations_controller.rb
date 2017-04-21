@@ -1,5 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  layout :set_layout
   before_action :configure_sign_up_params, only: [:create, :create_chief]
+  before_action :nil_user_redirect_to_top, only: [:show, :new_chief, :edit]
+  before_action :current_user_redirect_to_top, only: [:new_chief, :new]
 
   # before_action :configure_account_update_params, only: [:update]
   def create
@@ -44,6 +47,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/edit
   def edit
+    unless current_admin.nil?
+      redirect_to '/', notice: 'you can not access this page'
+    end
     @user = current_user
   end
 
@@ -58,7 +64,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     @company = Company.find(params[:company_id])
-    user = current_user
     if resource.update_with_password(user_params)
       redirect_to company_user_path(
         company_id: @company.id,
@@ -94,5 +99,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :current_password,:password_confirmation,:password, :avatar, :email)
+    end
+
+    def nil_user_redirect_to_top
+      if current_user.nil? && current_admin.nil?
+        redirect_to '/', notice: 'please sign in at fast'
+      end
+    end
+
+    def other_user_redirect_to_top
+      if current_user.id != @user.id
+        redirect_to '/', notice: 'you do not have right to access this page'
+        end
+    end
+
+    def current_user_redirect_to_top
+      unless current_user.nil?
+        redirect_to '/', notice: 'you can not access this page'
+      end
     end
 end

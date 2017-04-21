@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
+  before_action :set_layout
 
   protected
 
@@ -15,6 +17,22 @@ class ApplicationController < ActionController::Base
       I18n.locale = :en
     elsif @locale == "ja"
       I18n.locale = :ja
+    end
+  end
+
+  def set_layout
+    if sign_in_user?
+      if chief_user?
+        'chief'
+      else
+        'user'
+      end
+    else
+      if admin?
+        'admin'
+      else
+        'sign_out'
+      end
     end
   end
 

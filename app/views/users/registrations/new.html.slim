@@ -1,13 +1,10 @@
-- unless current_user.nil?
-  h2 このページのURLを新規登録者に送ってください
-- else
 h2
   | Sign up
 = form_for([@company, @company.users.build], url: user_company_registration_path(@company.id)) do |f|
   = devise_error_messages!
   .field
     = f.label :email
-    br
+  br
     = f.email_field :email, autofocus: true
   .field
     = f.label :name

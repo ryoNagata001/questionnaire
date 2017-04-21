@@ -1,6 +1,7 @@
 class RoomsController < ApplicationController
+  layout :set_layout
   def index
-    are_you_chief?
+    not_chief_redirect_to_top
     @company = Company.find(params[:company_id])
     @users = @company.users
   end
@@ -10,14 +11,14 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @user = User.find(@room.user.id)
     @chief = User.find(@room.chief_id)
-    can_you_access?
+    not_company_member_redirect_to_top
     @contents = @room.chats
     @content = Chat.new
   end
 
   private
 
-    def are_you_chief?
+    def not_chief_redirect_to_top
       if current_user.nil?
         redirect_to '/', notice: "please sign in as a user"
       elsif current_user.id != Company.find(params[:company_id]).chief_id
@@ -25,7 +26,7 @@ class RoomsController < ApplicationController
       end
     end
 
-    def can_you_access?
+    def not_company_member_redirect_to_top
       if current_user.nil?
         redirect_to '/', notice: "please sign in as a user"
       elsif current_user.id != @user.id && current_user.id != @company.chief_id

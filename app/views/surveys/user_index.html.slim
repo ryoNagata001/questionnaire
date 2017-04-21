@@ -1,26 +1,20 @@
-- unless @user_surveys.nil?
-  h2 回答済みのアンケートの結果を見る
+h2 回答済みのアンケートの結果を見る
+- unless @answered_surveys.nil?
   p
-    - @user_surveys.each do |user_survey|
-      - if user_survey.question_number == Survey.find(user_survey.survey_id).questions.count
-        = link_to Survey.find(user_survey.survey.id).title, result_company_survey_path(company_id: @company.id, id: user_survey.survey_id)
-        br
+    - @answered_surveys.each do |user_survey|
+      = link_to Survey.find(user_survey.survey.id).title, result_company_survey_path(company_id: @company.id, id: user_survey.survey_id)
+      br
 
-  h2 回答中のアンケートの結果を見る
+h2 回答中のアンケートに答える
+- unless @answering_surveys.nil?
   p
-    - @user_surveys.each do |user_survey|
-      - if user_survey.question_number < Survey.find(user_survey.survey_id).questions.count
-        = link_to Survey.find(user_survey.survey.id).title, company_survey_question_path(company_id: @company.id, survey_id: user_survey.survey_id, id: Survey.find(user_survey.survey_id).questions[user_survey.question_number].id)
-        br
+    - @answering_surveys.each do |user_survey|
+      = link_to Survey.find(user_survey.survey.id).title, company_survey_question_path(company_id: @company.id, survey_id: user_survey.survey_id, id: Survey.find(user_survey.survey_id).questions[user_survey.question_number].id)
+      br
 
-  h2 未回答のアンケートに回答する
+h2 未回答のアンケートに回答する
+- unless @not_look_surveys.nil?
   p
-    - @surveys.each do |survey|
-      - unless @survey_ids.include?(survey.id)
-        = link_to survey.title, top_company_survey_path(company_id: @company.id, id: survey.id)
-        br
-- else
-  h2 未回答のアンケートに回答する
-  - @surveys.each do |survey|
-    = link_to survey.title, top_company_survey_path(company_id: @company.id, id: survey.id)
-    br
+    - @not_look_surveys.each do |survey|
+      = link_to survey.title, top_company_survey_path(company_id: @company.id, id: survey.id)
+      br

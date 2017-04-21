@@ -1,6 +1,7 @@
 class CompaniesController < ApplicationController
+  layout :set_layout
   before_action :set_company, only: [:show, :edit, :update, :destroy]
-  before_action :are_you_admin?, only: [:index, :show, :new, :edit]
+  before_action :not_admin_redirect_to_top, only: [:index, :show, :new, :edit]
 
   # GET /companies
   def index
@@ -40,7 +41,7 @@ class CompaniesController < ApplicationController
       Room.destroy_all(chief_id: @company.chief_id)
     end
     if @company.update(company_params)
-      create_rooms.delay
+      delay.create_rooms
       redirect_to @company, notice: 'Company was successfully updated.'
     else
       render :edit
@@ -75,7 +76,7 @@ class CompaniesController < ApplicationController
       end
     end
 
-    def are_you_admin?
+    def not_admin_redirect_to_top
       if current_admin.nil?
         redirect_to '/', notice: 'You do not have right to access.'
       end

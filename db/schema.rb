@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415120625) do
+ActiveRecord::Schema.define(version: 20170419070305) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20170415120625) do
     t.integer  "company_id"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.boolean  "release",                   default: false
+    t.boolean  "released",                  default: false
     t.text     "description", limit: 65535
     t.index ["company_id"], name: "index_surveys_on_company_id", using: :btree
   end

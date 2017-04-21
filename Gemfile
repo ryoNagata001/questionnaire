@@ -95,3 +95,18 @@ gem "delayed_job_active_record"
 
 # デプロイ先でデーモンとして動かすのに必要
 gem "daemons"
+# rspec
+group :development, :test do
+  gem "rspec-rails"
+  gem "factory_girl_rails"
+end
+
+group :test do
+  gem "faker"
+  gem "capybara"
+  gem "database_cleaner"
+  gem "launchy"
+  gem "selenium-webdriver"
+end
+# do grobalise devise
+gem 'devise-i18n'
