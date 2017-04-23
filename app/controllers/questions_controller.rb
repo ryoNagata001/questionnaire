@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
     if @answer_text.save
       next_question_number = @survey.questions.index(@question) + 1
       @user_survey.update!(question_number: next_question_number)
-      end_of_survey?
+      redirect_if_end_of_survey
     else
       render :show
     end
@@ -51,7 +51,7 @@ class QuestionsController < ApplicationController
     end
     next_question_number = @survey.questions.index(@question) + 1
     @user_survey.update!(question_number: next_question_number)
-    end_of_survey?
+    redirect_if_end_of_survey
   end
 
   def destroy
@@ -120,7 +120,7 @@ class QuestionsController < ApplicationController
       params.require(:answer_select).permit(choice_ids: [])
     end
 
-    def end_of_survey?
+    def redirect_if_end_of_survey
       @company = Company.find(params[:company_id])
       if (@survey.questions.index(@question) + 1) == (@survey.questions.count)
         redirect_to end_of_question_company_survey_path(company_id: @company.id, id: @survey.id)
