@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   layout :set_layout
+  before_action :redirect_if_survey_released, only: [:edit, :create_answer_text, :create_answer_select, :update_select, :update_text]
   before_action :not_admin_redirect_to_top, only: :edit
 
   def show
@@ -148,7 +149,14 @@ class QuestionsController < ApplicationController
       params.require(:question).permit(
       :category_id,
       :title
-    )
+      )
+    end
 
+    def redirect_if_survey_released
+      @survey = Survey.find(params[:survey_id])
+      @company = Company.find(params[:company_id])
+      if @survey.released
+        redirect_to company_surveys_path(@company), notice: '公開後のsurveyは編集できません'
+      end
     end
 end

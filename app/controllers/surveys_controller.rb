@@ -1,7 +1,8 @@
 class SurveysController < ApplicationController
   layout :set_layout
   before_action :set_survey, only: [:release, :show, :edit, :update, :destroy, :top]
-  before_action :not_admin_redirect_to_top, only: [:index, :show, :new, ]
+  before_action :redirect_if_survey_released, only: [:show, :edit, :update]
+  before_action :not_admin_redirect_to_top, only: [:index, :show, :new, :release]
   before_action :set_company
   before_action :not_company_member_redirect_to_top, only: [:result, :top, :user_index]
 
@@ -11,7 +12,8 @@ class SurveysController < ApplicationController
   end
 
   def release
-    if @survey.update(released: !(@survey.released))
+    release = params[:released]
+    if @survey.update(released: release)
       redirect_to company_surveys_path(@company)
     else
       render company_surveys_path(@company), alert: '予期しないエラーが起こりました'
@@ -176,6 +178,12 @@ class SurveysController < ApplicationController
         else
           @not_look_surveys.push(survey)
         end
+      end
+    end
+
+    def redirect_if_survey_released
+      if @survey.released
+        redirect_to company_surveys_path(@company), notice: '公開後のsurveyは編集できません'
       end
     end
 end
