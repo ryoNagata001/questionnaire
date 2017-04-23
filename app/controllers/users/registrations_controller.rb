@@ -1,8 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   layout :set_layout
   before_action :configure_sign_up_params, only: [:create, :create_chief]
-  before_action :nil_user_redirect_to_top, only: [:show, :new_chief, :edit]
-  before_action :current_user_redirect_to_top, only: [:new_chief, :new]
+  before_action :redirect_if_nil_user, only: [:show, :new_chief, :edit]
+  before_action :redirect_if_current_user, only: [:new_chief, :new]
 
   # before_action :configure_account_update_params, only: [:update]
   def create
@@ -101,7 +101,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       params.require(:user).permit(:name, :current_password,:password_confirmation,:password, :avatar, :email)
     end
 
-    def nil_user_redirect_to_top
+    def redirect_if_nil_user
       if current_user.nil? && current_admin.nil?
         redirect_to '/', notice: 'please sign in at fast'
       end
@@ -113,7 +113,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         end
     end
 
-    def current_user_redirect_to_top
+    def redirect_if_current_user
       unless current_user.nil?
         redirect_to '/', notice: 'you can not access this page'
       end
