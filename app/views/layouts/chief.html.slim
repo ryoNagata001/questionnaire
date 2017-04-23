@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    title
+      | Questionnaire
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag '//www.google.com/jsapi', 'application', 'data-turbolinks-track': 'reload'
+  body
+    header.navbar
+      .container
+        #logo
+          | Questionnaire
+        ul.header-right
+          li
+            = link_to "Top", root_path
+          li
+            = link_to current_user.name, company_user_path(company_id: current_user.company_id, id: current_user.id)
+          li
+            = link_to "アンケート一覧", user_index_company_surveys_path(company_id: current_user.company_id)
+          li
+            = link_to "社員一覧", company_rooms_path(company_id: current_user.company_id)
+          li
+            = link_to "ログアウト", destroy_user_session_path, method: :delete
+          li.avatar
+            - unless current_user.avatar.nil?
+              = image_tag current_user.avatar
+    p.notice
+      = notice
+    p.alert
+      = alert
+    = yield
+    br
+    footer
+      = link_to "English" , root_path(locale: "en")
+      = link_to "日本語" , root_path(locale: "ja")
