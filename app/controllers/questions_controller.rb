@@ -74,10 +74,7 @@ class QuestionsController < ApplicationController
   def update_select
     @survey = Survey.find(params[:survey_id])
     @company = Company.find(params[:company_id])
-    array_of_question = params.require(:question).permit(
-      :category_id,
-      :title
-    )
+    array_of_question = question_params
     @question = Question.find(params[:id])
     @question.update(array_of_question)
     array_of_choices = params.require(:question).permit(choices_attributes: [:content, :id, :_destroy])
@@ -145,5 +142,13 @@ class QuestionsController < ApplicationController
       elsif current_user.company_id != params[:company_id].to_i
         redirect_to '/', notice: 'you do not have right to access'
       end
+    end
+
+    def question_params
+      params.require(:question).permit(
+      :category_id,
+      :title
+    )
+
     end
 end
