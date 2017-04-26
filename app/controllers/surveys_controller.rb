@@ -12,11 +12,16 @@ class SurveysController < ApplicationController
   end
 
   def release
-    release = params[:released]
-    if @survey.update(released: release)
+    if params[:released] == "true"
+      @survey.released = true
+    else
+      @survey.released = false
+    end
+    if @survey.save
       redirect_to company_surveys_path(@company)
     else
-      render company_surveys_path(@company), alert: '予期しないエラーが起こりました'
+      binding.pry
+      redirect_to company_surveys_path(company_id: @company.id), notice: '予期しないエラーが起こりました'
     end
   end
 
@@ -183,7 +188,7 @@ class SurveysController < ApplicationController
 
     def redirect_if_survey_released
       if @survey.released
-        redirect_to company_surveys_path(@company), notice: '公開後のsurveyは編集できません'
+        redirect_to company_surveys_path(company_id: params[:company_id]), notice: '公開後のsurveyは編集できません'
       end
     end
 end

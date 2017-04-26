@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   layout :set_layout
-  before_action :redirect_if_survey_released, only: [:edit, :create_answer_text, :create_answer_select, :update_select, :update_text]
+  before_action :redirect_if_survey_released, only: [:edit, :update_select, :update_text]
   before_action :not_admin_redirect_to_top, only: :edit
 
   def show
@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
       redirect_to wrong_question_company_survey_questions_path(company_path: @company.id, survey_id: @survey.id)
     end
     unless @question.text_question?
-      @choises = @question.choices
+      @choices = @question.choices
     end
   end
 
@@ -60,7 +60,7 @@ class QuestionsController < ApplicationController
     @company = Company.find(params[:company_id])
     @question = Question.find(params[:id])
     if @question.destroy
-      redirect_to company_survey_path(company_id: @company.id, survey_id: @survey.id)
+      redirect_to company_survey_path(company_id: @company.id, id: @survey.id)
     else
       render '/'
     end
@@ -108,7 +108,7 @@ class QuestionsController < ApplicationController
   private
 
     def answer_text_params
-      params.require(:answer_text).permit(:category_id, :title).merge(
+      params.require(:answer_text).permit(:category_id, :title, :content).merge(
         question_id: @question.id,
         user_id: current_user.id
       )

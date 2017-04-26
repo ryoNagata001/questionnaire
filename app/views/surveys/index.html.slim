@@ -12,9 +12,8 @@ p
       - @surveys.each do |survey|
         tr
           - if survey.released
-            td = link_to survey.title, company_survey_path(company_id: @company.id, id: survey.id)
-            td = link_to 'Destroy', company_survey_path(:company_id => @company.id, :id => survey.id), data: { confirm: 'Are you sure?' }, method: :delete
-            td = link_to 'Unrelease', release_company_survey_path(company_id: @company.id, id: survey.id), method: :post, data: { confirm: '本当に公開を取り消しますか？' }
+            td = survey.title
+            td = link_to 'Unrelease', release_company_survey_path(company_id: @company.id, id: survey.id, released: false), method: :post, data: { confirm: '本当に公開を取り消しますか？' }
 
 p
   h1 Unreleased surveys
@@ -33,7 +32,7 @@ p
           - unless survey.released
             td = link_to survey.title, company_survey_path(company_id: @company.id, id: survey.id)
             td = link_to 'Destroy', company_survey_path(:company_id => @company.id, :id => survey.id), data: { confirm: 'Are you sure?' }, method: :delete
-            td = link_to 'Release', release_company_survey_path(company_id: @company.id, id: survey.id), method: :post, data: { confirm: '本当に公開しますか？' }
+            td = link_to 'Release', release_company_survey_path(company_id: @company.id, id: survey.id, released: true), method: :post, data: { confirm: '本当に公開しますか？' }
 
   br
 = link_to 'New Survey', new_company_survey_path(@company.id)

@@ -1,40 +1,15 @@
 p#notice = notice
 
 h1 = @company.name
-strong Password:
-= @company.password
 br
 strong 登録者:
 = @company.admin.name
-br
-= link_to 'Edit', edit_company_path(@company)
-'|
-= link_to 'Back', companies_path
 
 h2 = link_to "アンケート一覧", company_surveys_path(company_id: @company.id)
 
-table border="1"
-  thead
-    tr
-      th Title
-      th released?
-      th
-      th
-
-  tbody
-    - @company.surveys.each do |survey|
-      tr
-          td = link_to survey.title, company_survey_path(:company_id => @company.id, :id => survey.id)
-          - if survey.released
-            td 公開
-          - else
-            td 未公開
-          td = link_to 'Edit', edit_company_survey_path(:company_id => @company.id, :id => survey.id)
-          td = link_to 'Destroy', company_survey_path(:company_id => @company.id, :id => survey.id), data: { confirm: 'Are you sure?' }, method: :delete
-
-= link_to 'New Survey', new_company_survey_path(@company.id)
-
 br
+h2 代表ユーザー
+= @chief.name
 h2 社員一覧
 - @users.each do |user|
   = user.name
