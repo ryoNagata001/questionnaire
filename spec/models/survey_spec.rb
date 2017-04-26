@@ -7,10 +7,6 @@ describe Survey do
   it "has a valid factory" do
     expect(build(:survey)).to be_valid
   end
-  it "is valid with a company_id" do
-    survey = build(:survey)
-    expect(survey).to be_valid
-  end
   it "is invaild without a company_id" do
     survey = build(:survey_does_not_have_company)
     survey.valid?

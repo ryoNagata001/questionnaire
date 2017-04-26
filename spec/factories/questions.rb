@@ -7,6 +7,5 @@ FactoryGirl.define do
     factory :select_question do
       category_id 2
     end
-
   end
- end
+end
