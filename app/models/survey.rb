@@ -3,5 +3,4 @@ class Survey < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :user_survey, dependent: :destroy
   validates :company_id, presence: true
-  validates :released, presence: true
 end

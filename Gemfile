@@ -110,3 +110,6 @@ group :test do
 end
 # do grobalise devise
 gem 'devise-i18n'
+
+# faker
+gem 'faker'
