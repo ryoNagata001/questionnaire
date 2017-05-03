@@ -2,9 +2,9 @@ class QuestionsController < ApplicationController
   layout :set_layout
   before_action :redirect_if_survey_released, only: [:edit, :update_select, :update_text]
   before_action :not_admin_redirect_to_top, only: :edit
+  before_action :not_company_member_redirect_to_top, only: [:show, :create_answer_select, :create_answer_text]
 
   def show
-    not_company_member_redirect_to_top
     @company = Company.find(params[:company_id])
     @survey = Survey.find(params[:survey_id])
     @questions = @survey.questions
@@ -80,7 +80,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @question.update(array_of_question)
     array_of_choices = params.require(:question).permit(choices_attributes: [:content, :id, :_destroy])
-    array_of_choices[:choices_attributes].each do |key, choice|
+    array_of_choices[:choices_attributes].each do |_key, choice|
       if choice[:id].nil?
         unless choice[:delete]
           Choice.create(question_id: @question.id, content: choice[:content])

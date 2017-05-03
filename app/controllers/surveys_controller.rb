@@ -20,7 +20,6 @@ class SurveysController < ApplicationController
     if @survey.save
       redirect_to company_surveys_path(@company)
     else
-      binding.pry
       redirect_to company_surveys_path(company_id: @company.id), notice: '予期しないエラーが起こりました'
     end
   end

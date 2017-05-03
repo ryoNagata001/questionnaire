@@ -5,7 +5,7 @@ class SlackNoticeService
   end
 
   def notification
-    HTTParty.post(url, body: { "text": text }.to_json)
+    HTTParty.post(url, body: { text: text }.to_json)
   end
 
   private

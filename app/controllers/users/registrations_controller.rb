@@ -17,7 +17,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @room.save!
     end
       redirect_to company_path(@company), notice: 'Send email to your address, please check your account'
-    rescue => e
+    rescue
       render :new
   end
 
@@ -30,7 +30,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @company.update!
     end
       redirect_to company_path(@company), notice: 'chief user was successfully created'
-    rescue => e
+    rescue
       render :new
   end
 
@@ -110,7 +110,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     def other_user_redirect_to_top
       if current_user.id != @user.id
         redirect_to '/', notice: 'you do not have right to access this page'
-        end
+      end
     end
 
     def redirect_if_current_user
