@@ -10,7 +10,11 @@ class RoomsController < ApplicationController
     @company = Company.find(params[:company_id])
     @room = Room.find(params[:id])
     @user = User.find(@room.user.id)
-    @chief = User.find(@room.chief_id)
+    if User.find(@room.chief_id).nil?
+      redirect_to '/', notice: '今は担当者がいません'
+    else
+      @chief = User.find(@room.chief_id)
+    end
     not_company_member_redirect_to_top
     @contents = @room.chats
     @content = Chat.new

@@ -22,6 +22,8 @@ class ChatsController < ApplicationController
     end
 
     def chat_params
-      params.require(:chat).permit(:content)
+      params.require(:chat).permit(:content).merge(
+        transmittion_user_id: current_user.id
+      )
     end
 end

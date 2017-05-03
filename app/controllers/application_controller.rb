@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_layout
-    if sign_in_user? and chief_user?
+    if sign_in_user? && chief_user?
       'chief'
     elsif sign_in_user?
       'user'

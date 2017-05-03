@@ -10,6 +10,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   def show
+    @chief = User.find(@company.chief_id)
     @users = @company.users
   end
 
