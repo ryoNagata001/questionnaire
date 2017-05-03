@@ -107,6 +107,7 @@ group :test do
   gem "database_cleaner"
   gem "launchy"
   gem "selenium-webdriver"
+  gem 'rails-controller-testing'
 end
 # do grobalise devise
 gem 'devise-i18n'

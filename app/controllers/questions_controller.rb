@@ -12,12 +12,13 @@ class QuestionsController < ApplicationController
     @user_survey = UserSurvey.find_by(survey_id: @survey.id, user_id: current_user.id)
     @question = Question.find(params[:id])
     if @user_survey.question_number != @survey.questions.index(@question)
-      redirect_to wrong_question_company_survey_questions_path(company_path: @company.id, survey_id: @survey.id)
+      redirect_to wrong_question_company_survey_questions_path(company_id: @company.id, survey_id: @survey.id)
     end
     unless @question.text_question?
       @choises = @question.choices
     end
   end
+
 
   def wrong_question; end
 
