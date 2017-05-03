@@ -12,7 +12,7 @@ FactoryGirl.define do
       # ここで認証済みでメールを送信しない設定を行う
       user.skip_confirmation_notification!
       user.skip_confirmation!
-
     }
+    confirmed_at Time.now
   end
 end
