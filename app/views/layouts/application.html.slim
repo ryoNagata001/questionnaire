@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title
+      | Questionnaire
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag '//www.google.com/jsapi', 'application', 'data-turbolinks-track': 'reload'
+  body
+    header.navbar
+      .container
+        #logo
+          | Questionnaire
+        ul.header-right
+          li
+            = link_to "Top", root_path
+          li
+            = link_to "ログイン", new_user_session_path
+    p.notice
+      = notice
+    p.alert
+      = alert
+    = yield
+    br
+    footer
+      = link_to "English" , root_path(locale: "en")
+      = link_to "日本語" , root_path(locale: "ja")
+    .footer_left
+      = link_to "アドミンログイン", new_admin_session_path

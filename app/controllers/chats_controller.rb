@@ -1,4 +1,5 @@
 class ChatsController < ApplicationController
+  layout :set_layout
   before_action :set_room, only: :create
 
   def create
@@ -8,7 +9,7 @@ class ChatsController < ApplicationController
       redirect_to company_room_path(
         company_id: @company.id,
         id: @room.id
-      ), notice: 'your account was successfully created.'
+      ), notice: 'your message was successfully send'
     else
       render :new
     end
@@ -21,6 +22,8 @@ class ChatsController < ApplicationController
     end
 
     def chat_params
-      params.require(:chat).permit(:content)
+      params.require(:chat).permit(:content).merge(
+        transmittion_user_id: current_user.id
+      )
     end
 end

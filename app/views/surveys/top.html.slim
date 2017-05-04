@@ -1,0 +1,10 @@
+h1 = @survey.title
+br
+p
+  h3 このアンケートの問題数は
+  h2 = @survey.questions.count.to_s + "問です"
+p
+  h3 アンケート詳細
+  = @survey.description
+
+h2 = link_to 'アンケートに答える', company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @survey.questions[0].id)

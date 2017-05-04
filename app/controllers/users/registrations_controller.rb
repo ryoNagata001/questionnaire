@@ -1,5 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  layout :set_layout
   before_action :configure_sign_up_params, only: [:create, :create_chief]
+  before_action :redirect_if_nil_user, only: [:show, :new_chief, :edit]
+  before_action :redirect_if_current_user, only: [:new_chief, :new]
 
   # before_action :configure_account_update_params, only: [:update]
   def create
@@ -13,8 +16,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       )
       @room.save!
     end
-      redirect_to company_path(@company), notice: 'your account was successfully created.'
-    rescue => e
+      redirect_to company_path(@company), notice: 'Send email to your address, please check your account'
+    rescue
       render :new
   end
 
@@ -27,7 +30,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @company.update!
     end
       redirect_to company_path(@company), notice: 'chief user was successfully created'
-    rescue => e
+    rescue
       render :new
   end
 
@@ -44,13 +47,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/edit
   def edit
+    unless current_admin.nil?
+      redirect_to '/', notice: 'you can not access this page'
+    end
     @user = current_user
+  end
+
+  def destroy
+    @company = Company.find(params[:company_id])
+    @user = User.find(params[:id])
+    if User.destroy(@user)
+      redirect_to company_rooms_path(company_id: @company.id)
+    end
   end
 
   # PUT /resource
   def update
     @company = Company.find(params[:company_id])
-    if @company.users.update(user_params)
+    if resource.update_with_password(user_params)
       redirect_to company_user_path(
         company_id: @company.id,
         id: current_user.id
@@ -84,6 +98,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :password, :avatar, :email)
+      params.require(:user).permit(:name, :current_password,:password_confirmation,:password, :avatar, :email)
+    end
+
+    def redirect_if_nil_user
+      if current_user.nil? && current_admin.nil?
+        redirect_to '/', notice: 'please sign in at fast'
+      end
+    end
+
+    def other_user_redirect_to_top
+      if current_user.id != @user.id
+        redirect_to '/', notice: 'you do not have right to access this page'
+      end
+    end
+
+    def redirect_if_current_user
+      unless current_user.nil?
+        redirect_to '/', notice: 'you can not access this page'
+      end
     end
 end

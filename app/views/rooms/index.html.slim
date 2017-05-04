@@ -3,3 +3,4 @@ h1 = @company.name
 - @users.each do |user|
   -if user.id != @company.chief_id
     p = link_to user.name, company_room_path(:company_id => @company.id,:id => user.room.id)
+    = link_to '削除', user_company_registration_path(company_id: @company.id, id: user.id), method: :delete, data: { confirm: 'Are you sure?' }

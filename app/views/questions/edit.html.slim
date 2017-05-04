@@ -1,0 +1,18 @@
+- if text_question?(@question)
+  = form_for(@question, url: update_text_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
+    .field
+      = f.label :question
+      = f.text_field :title
+    .actions = f.submit
+- else
+  = form_for(@question, url: update_select_company_survey_question_path(company_id: @company.id, survey_id: @survey.id, id: @question.id)) do |f|
+    .field
+      = f.label :question
+      = f.text_field :title
+      br
+      = f.label :selection
+      = f.nested_fields_for :choices do |ff|
+        = ff.text_field :content
+        = ff.remove_nested_fields_link '削除'
+      = f.add_nested_fields_link :choices
+    .actions = f.submit

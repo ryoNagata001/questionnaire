@@ -1,5 +1,5 @@
 h2
-  | Edit 
+  | Edit
   = resource_name.to_s.humanize
 = form_for(@user, url: user_company_registration_path(@user.company_id), html: { method: :put }) do |f|
   = devise_error_messages!
@@ -17,7 +17,7 @@ h2
     = f.file_field :avatar
   - if devise_mapping.confirmable? && resource.pending_reconfirmation?
     div
-      | Currently waiting confirmation for: 
+      | Currently waiting confirmation for:
       = resource.unconfirmed_email
   .field
     = f.label :password

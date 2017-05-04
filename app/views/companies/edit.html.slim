@@ -1,7 +1,17 @@
 h1 Editing company
 
-== render 'form'
+= form_for @company do |f|
 
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :password
+    = f.text_field :password
+  .select
+    = f.label :chief_user
+    = f.select :chief_id, @users
+  .actions = f.submit
 = link_to 'Show', @company
 '|
 = link_to 'Back', companies_path

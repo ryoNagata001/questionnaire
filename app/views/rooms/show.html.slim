@@ -7,10 +7,14 @@
 - else
   - @contents.each do |content|
     - if content.transmittion_user_id == @company.chief_id
-      h2 = @chief.name
+      p
+      strong = @chief.name + '：'
     - else
-      = @user.name
-    p = content.content
+      p
+      - user = User.find(content.transmittion_user_id)
+      strong = user.name + "："
+    = content.content
+    br
 
 = form_for([@room, @room.chats.build], url: company_room_chats_path(:company_id => @company.id, :room_id => @room.id)) do |f|
   .field

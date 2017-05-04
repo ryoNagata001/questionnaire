@@ -5,11 +5,23 @@ Rails.application.routes.draw do
         post 'text_create'
         post 'select_create'
         get 'result'
+        post 'release'
+        get 'top'
+        get 'end_of_question'
       end
-      resources :questions, only: [:show] do
+      collection do
+        get 'user_index'
+      end
+      resources :questions, only: [:show, :destroy] do
         member do
           post 'create_answer_text'
           post 'create_answer_select'
+          get 'edit'
+          patch 'update_select'
+          patch 'update_text'
+        end
+        collection do
+          get 'wrong_question'
         end
       end
     end

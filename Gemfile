@@ -55,7 +55,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # slim
 gem 'slim-rails'
 # Bootstrap
-gem 'bootstrap-sass'
+gem 'therubyracer'
+gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'
+gem 'twitter-bootstrap-rails'
+
 # Devise
 gem 'devise'
 # CarrierWave
@@ -79,3 +82,35 @@ gem 'active_model_serializers'
 gem 'grape'
 # slack連携
 gem 'httparty'
+# デバッグ用
+group :development, :test do
+  gem 'pry-rails'  # rails console(もしくは、rails c)でirbの代わりにpryを使われる
+  gem 'pry-doc'    # methodを表示
+  gem 'pry-byebug' # デバッグを実施(Ruby 2.0以降で動作する)
+  gem 'pry-stack_explorer' # スタックをたどれる
+end
+# 非同期処理
+gem "delayed_job"
+gem "delayed_job_active_record"
+
+# デプロイ先でデーモンとして動かすのに必要
+gem "daemons"
+# rspec
+group :development, :test do
+  gem "rspec-rails"
+  gem "factory_girl_rails"
+end
+
+group :test do
+  gem "faker"
+  gem "capybara"
+  gem "database_cleaner"
+  gem "launchy"
+  gem "selenium-webdriver"
+  gem 'rails-controller-testing'
+end
+# do grobalise devise
+gem 'devise-i18n'
+
+# faker
+gem 'faker'

@@ -1,19 +1,18 @@
 p#notice = notice
 
-p
-  strong Name:
-  = @company.name
-p
-  strong Password:
-  = @company.password
-p
-  strong Admin:
-  = @company.admin
+h1 = @company.name
+br
+strong 登録者:
+= @company.admin.name
 
+h2 = link_to "アンケート一覧", company_surveys_path(company_id: @company.id)
+
+br
+h2 代表ユーザー
+= @chief.name
+h2 社員一覧
 - @users.each do |user|
-  h2 = user.name
-
-= link_to 'Edit', edit_company_path(@company)
-'|
-= link_to 'Back', companies_path
+  = user.name
+  br
+br
 = link_to '新規ユーザー登録', new_user_company_registration_path(:company_id => @company.id)
