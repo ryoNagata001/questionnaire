@@ -1,8 +1,8 @@
 class QuestionsController < ApplicationController
   layout :set_layout
-  before_action :redirect_if_survey_released, only: [:edit, :update_select, :update_text]
-  before_action :not_admin_redirect_to_top, only: :edit
-  before_action :not_company_member_redirect_to_top, only: [:show, :create_answer_select, :create_answer_text]
+  before_action :redirect_survey_index_if_survey_released, only: [:edit, :update_select, :update_text]
+  before_action :authentication_admin, only: :edit
+  before_action :authentication_company_member, only: [:show, :create_answer_select, :create_answer_text]
 
   def show
     @company = Company.find(params[:company_id])
@@ -132,32 +132,10 @@ class QuestionsController < ApplicationController
       end
     end
 
-    def not_admin_redirect_to_top
-      if current_admin.nil?
-        redirect_to '/', notice: "you can not access this page"
-      end
-    end
-
-    def not_company_member_redirect_to_top
-      if current_user.nil?
-        redirect_to '/', notice: "please sign in as a user to show this page"
-      elsif current_user.company_id != params[:company_id].to_i
-        redirect_to '/', notice: 'you do not have right to access'
-      end
-    end
-
     def question_params
       params.require(:question).permit(
       :category_id,
       :title
       )
-    end
-
-    def redirect_if_survey_released
-      @survey = Survey.find(params[:survey_id])
-      @company = Company.find(params[:company_id])
-      if @survey.released
-        redirect_to company_surveys_path(@company), notice: '公開後のsurveyは編集できません'
-      end
     end
 end

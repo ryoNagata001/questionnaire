@@ -1,10 +1,10 @@
 class SurveysController < ApplicationController
   layout :set_layout
   before_action :set_survey, only: [:release, :show, :edit, :update, :destroy, :top]
-  before_action :redirect_if_survey_released, only: [:show, :edit, :update]
-  before_action :not_admin_redirect_to_top, only: [:index, :show, :new, :release]
+  before_action :redirect_survey_index_if_survey_released, only: [:show, :edit, :update]
+  before_action :authentication_admin, only: [:index, :show, :new, :release]
   before_action :set_company
-  before_action :not_company_member_redirect_to_top, only: [:result, :top, :user_index]
+  before_action :authentication_company_member, only: [:result, :top, :user_index]
 
   # GET /surveys
   def index
@@ -147,20 +147,6 @@ class SurveysController < ApplicationController
       @question.survey_id = @survey.id
     end
 
-    def not_admin_redirect_to_top
-      if current_admin.nil?
-        redirect_to '/', notice: 'you can not access this page'
-      end
-    end
-
-    def not_company_member_redirect_to_top
-      if current_user.nil? && current_admin.nil?
-        redirect_to '/', notice: "please sign in as a user"
-      elsif current_user.company_id != @company.id
-        redirect_to '/', notice: 'you can not access this page'
-      end
-    end
-
     def wrong_company_member_redirect_to_wrong_question
       if current_user.company_id != @survey.company_id
         redirect_to wrong_question_company_survey_questions_path(company_path: @company.id, survey_id: @survey.id)
@@ -185,9 +171,4 @@ class SurveysController < ApplicationController
       end
     end
 
-    def redirect_if_survey_released
-      if @survey.released
-        redirect_to company_surveys_path(company_id: params[:company_id]), notice: '公開後のsurveyは編集できません'
-      end
-    end
 end

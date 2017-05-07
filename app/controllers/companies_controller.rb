@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
   layout :set_layout
   before_action :set_company, only: [:show, :edit, :update, :destroy]
-  before_action :redirect_if_not_admin, only: [:index, :show, :new, :edit]
+  before_action :authentication_admin, only: [:index, :show, :new, :edit]
 
   # GET /companies
   def index
@@ -77,9 +77,4 @@ class CompaniesController < ApplicationController
       end
     end
 
-    def redirect_if_not_admin
-      if current_admin.nil?
-        redirect_to '/', notice: 'You do not have right to access.'
-      end
-    end
 end

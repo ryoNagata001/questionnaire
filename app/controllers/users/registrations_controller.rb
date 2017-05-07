@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   layout :set_layout
   before_action :configure_sign_up_params, only: [:create, :create_chief]
-  before_action :redirect_if_nil_user, only: [:show, :new_chief, :edit]
+  before_action :authentication_user, only: [:show, :new_chief, :edit]
   before_action :redirect_if_current_user, only: [:new_chief, :new]
 
   # before_action :configure_account_update_params, only: [:update]
@@ -113,9 +113,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     end
 
-    def redirect_if_current_user
-      unless current_user.nil?
-        redirect_to '/', notice: 'you can not access this page'
-      end
-    end
 end
